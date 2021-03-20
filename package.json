@@ -1,6 +1,7 @@
 {
   "name": "kumo-app",
   "version": "0.1.0",
+  "homepage": "https://ichiro-its.github.io/kumo-app/",
   "description": "React wrapper for Kumo client library",
   "keywords": [
     "javascript",
