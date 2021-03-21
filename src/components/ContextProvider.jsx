@@ -14,7 +14,8 @@ import {
 
 import { Session } from "kumo-client";
 import PropTypes from "prop-types";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import Store from "store2";
 
 import { useLogger } from "./LoggerProvider";
 
@@ -40,7 +41,10 @@ function ContextProvider({ children }) {
   const [session] = useState(new Session());
   const [context, setContext] = useState(null);
 
-  const [webSocketUrl, setWebSocketUrl] = useState("ws://localhost:8080");
+  const [webSocketUrl, setWebSocketUrl] = useState(
+    Store.get("webSocketUrl", "ws://localhost:8080")
+  );
+
   const [connecting, setConnecting] = useState(false);
 
   session
@@ -49,16 +53,26 @@ function ContextProvider({ children }) {
 
       setContext(newContext);
       setConnecting(false);
+
+      Store.set("webSocketUrlCanConnect", true);
     })
     .onDisconnect((code, reason) => {
       logger.error(`Disconnected from the bridge server! ${reason} (${code})`);
 
       setContext(null);
       setConnecting(false);
+
+      Store.set("webSocketUrlCanConnect", false);
     })
     .onError((err) => {
       logger.error(`Found error! ${err.message}`);
     });
+
+  useEffect(() => {
+    if (context === null && Store.get("webSocketUrlCanConnect", false)) {
+      session.connect(webSocketUrl);
+    }
+  });
 
   const onConnectButton = () => {
     setTimeout(() => {
@@ -74,18 +88,20 @@ function ContextProvider({ children }) {
 
   const onWebSocketUrlChange = (event) => {
     setWebSocketUrl(event.target.value);
+    Store.set("webSocketUrl", event.target.value);
+    Store.set("webSocketUrlCanConnect", false);
   };
 
   return (
     <div>
-      <Fade in={context}>
+      <Fade in={context !== null}>
         <div>
           <ContextContext.Provider value={context}>
             {children}
           </ContextContext.Provider>
         </div>
       </Fade>
-      <Fade in={!context}>
+      <Fade in={context === null}>
         <div>
           <Container maxWidth="xs">
             <Card>
