@@ -15,9 +15,9 @@ import {
 import { Session } from "kumo-client";
 import PropTypes from "prop-types";
 import React, { createContext, useEffect, useState } from "react";
-import Store from "store2";
 
 import { useLogger } from "./LoggerProvider";
+import useStoreState from "../utilities";
 
 const ContextContext = createContext(null);
 
@@ -38,38 +38,42 @@ function ContextProvider({ children }) {
   const classes = useStyles();
   const logger = useLogger();
 
-  const [session] = useState(new Session());
+  const [session, setSession] = useState(null);
   const [context, setContext] = useState(null);
-
-  const [webSocketUrl, setWebSocketUrl] = useState(
-    Store.get("webSocketUrl", "ws://localhost:8080")
-  );
-
   const [connecting, setConnecting] = useState(false);
 
-  session
-    .onConnect((newContext) => {
-      logger.success("Connected to the bridge server!");
+  const [webSocketUrl, setWebSocketUrl] = useStoreState(
+    "webSocketUrl",
+    "ws://localhost:8080"
+  );
 
-      setContext(newContext);
-      setConnecting(false);
-
-      Store.set("webSocketUrlCanConnect", true);
-    })
-    .onDisconnect((code, reason) => {
-      logger.error(`Disconnected from the bridge server! ${reason} (${code})`);
-
-      setContext(null);
-      setConnecting(false);
-
-      Store.set("webSocketUrlCanConnect", false);
-    })
-    .onError((err) => {
-      logger.error(`Found error! ${err.message}`);
-    });
+  const [autoConnect, setAutoConnect] = useStoreState("autoConnect", false);
 
   useEffect(() => {
-    if (context === null && Store.get("webSocketUrlCanConnect", false)) {
+    if (session === null) {
+      const newSession = new Session()
+        .onConnect((newContext) => {
+          logger.success("Connected to the bridge server!");
+
+          setContext(newContext);
+          setConnecting(false);
+          setAutoConnect(true);
+        })
+        .onDisconnect((code, reason) => {
+          logger.error(
+            `Disconnected from the bridge server! ${reason} (${code})`
+          );
+
+          setContext(null);
+          setConnecting(false);
+          setAutoConnect(false);
+        })
+        .onError((err) => {
+          logger.error(`Found error! ${err.message}`);
+        });
+
+      setSession(newSession);
+    } else if (context === null && autoConnect) {
       session.connect(webSocketUrl);
     }
   });
@@ -77,7 +81,7 @@ function ContextProvider({ children }) {
   const onConnectButton = () => {
     setTimeout(() => {
       session.connect(webSocketUrl);
-    }, 1000);
+    }, 500);
 
     setConnecting(true);
   };
@@ -88,8 +92,7 @@ function ContextProvider({ children }) {
 
   const onWebSocketUrlChange = (event) => {
     setWebSocketUrl(event.target.value);
-    Store.set("webSocketUrl", event.target.value);
-    Store.set("webSocketUrlCanConnect", false);
+    setAutoConnect(false);
   };
 
   return (
@@ -101,7 +104,7 @@ function ContextProvider({ children }) {
           </ContextContext.Provider>
         </div>
       </Fade>
-      <Fade in={context === null}>
+      <Fade in={context === null && !autoConnect}>
         <div>
           <Container maxWidth="xs">
             <Card>
