@@ -1,14 +1,46 @@
+import { Box, Container, Grid } from "@material-ui/core";
 import React from "react";
 
-import ContextProvider from "./components/ContextProvider";
-import { LoggerProvider } from "./components/LoggerProvider";
+import {
+  LoggerProvider,
+  SessionProvider,
+  SimpleClientNode,
+  SimplePublisherNode,
+  SimpleServiceNode,
+  SimpleSubscriptionNode,
+} from "./components";
 
 function App() {
   return (
     <LoggerProvider>
-      <ContextProvider>
-        <div>Hello World</div>
-      </ContextProvider>
+      <SessionProvider>
+        <Box margin={4}>
+          <Container maxWidth="md">
+            <Grid container spacing={4}>
+              <Grid item sm={6} xs={12}>
+                <Grid container spacing={4}>
+                  <Grid item xs={12}>
+                    <SimplePublisherNode />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SimpleSubscriptionNode />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item sm={6} xs={12}>
+                <Grid container spacing={4}>
+                  <Grid item xs={12}>
+                    <SimpleClientNode />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SimpleServiceNode />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
+      </SessionProvider>
     </LoggerProvider>
   );
 }
