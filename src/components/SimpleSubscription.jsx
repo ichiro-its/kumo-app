@@ -2,14 +2,17 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Grid,
   List,
   ListItem,
   ListItemText,
   makeStyles,
+  Typography,
   useTheme,
 } from "@material-ui/core";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 
 import { useLogger } from "./LoggerProvider";
 import { useSession } from "./SessionProvider";
@@ -33,7 +36,7 @@ function SimpleSubscription() {
 
   const [node, setNode] = useState(null);
   const [subscription, setSubscription] = useState(null);
-  const [messages, setMessages] = useState(["test"]);
+  const [messages, setMessages] = useState([]);
 
   const session = useSession();
 
@@ -52,8 +55,11 @@ function SimpleSubscription() {
       node
         .createSubscription("std_msgs/msg/String", "/topic", (message) => {
           setMessages((prevMessages) => {
-            const newMessages = prevMessages.slice(-4);
-            newMessages.push(message.data);
+            const newMessages = prevMessages.slice();
+            newMessages.unshift({
+              id: uuid(),
+              data: message.data,
+            });
 
             return newMessages;
           });
@@ -68,6 +74,31 @@ function SimpleSubscription() {
     }
   });
 
+  const MessageList = () => {
+    if (messages.length <= 0) {
+      return (
+        <Grid
+          container
+          style={{ minHeight: "100%" }}
+          justify="center"
+          alignItems="center"
+        >
+          <Typography>No data</Typography>
+        </Grid>
+      );
+    }
+
+    const messageItems = messages.map((message) => {
+      return (
+        <ListItem key={message.id} button>
+          <ListItemText primary={message.data} />
+        </ListItem>
+      );
+    });
+
+    return <List disablePadding>{messageItems}</List>;
+  };
+
   return (
     <Card>
       <CardHeader
@@ -77,14 +108,8 @@ function SimpleSubscription() {
           title: classes.headerTitle,
         }}
       />
-      <CardContent>
-        <List>
-          {messages.map((message) => (
-            <ListItem key={message}>
-              <ListItemText primary={message} />
-            </ListItem>
-          ))}
-        </List>
+      <CardContent style={{ height: 200, overflow: "auto" }}>
+        <MessageList />
       </CardContent>
     </Card>
   );

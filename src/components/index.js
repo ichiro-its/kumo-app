@@ -1,4 +1,6 @@
-import SessionProvider from "./SessionProvider";
+import SimplePublisher from "./SimplePublisher";
+import SimpleSubscription from "./SimpleSubscription";
 
-export { SessionProvider };
+export { SimplePublisher, SimpleSubscription };
 export * from "./LoggerProvider";
+export * from "./SessionProvider";

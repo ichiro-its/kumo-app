@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -82,12 +83,11 @@ function SessionProvider({ children }) {
     }
   });
 
-  const onConnectButton = () => {
+  const onConnect = () => {
+    setConnecting(true);
     setTimeout(() => {
       bridge.connect(webSocketUrl);
     }, 500);
-
-    setConnecting(true);
   };
 
   const validateWebSocketUrl = () => {
@@ -99,56 +99,62 @@ function SessionProvider({ children }) {
     setAutoConnect(false);
   };
 
+  const NewSessionCard = () => {
+    return (
+      <Card raised>
+        <CardHeader
+          title="Create a New Session"
+          classes={{
+            root: classes.headerRoot,
+            title: classes.headerTitle,
+          }}
+        />
+        <CardContent>
+          <TextField
+            label="WebSocket URL"
+            value={webSocketUrl}
+            onChange={onWebSocketUrlChange}
+            error={!validateWebSocketUrl()}
+            helperText={validateWebSocketUrl() ? "" : "Invalid WebSocket URL"}
+            disabled={connecting}
+            variant="outlined"
+            fullWidth
+          />
+        </CardContent>
+        <CardActions>
+          <Button
+            onClick={onConnect}
+            disabled={!validateWebSocketUrl() || connecting}
+            color="primary"
+            variant="contained"
+            fullWidth
+          >
+            {connecting ? <CircularProgress size={24} /> : "Connect"}
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  };
+
   return (
-    <div>
+    <Box>
       <Fade in={session !== null}>
-        <div>
+        <Box>
           <SessionContext.Provider value={session}>
             {session !== null ? children : ""}
           </SessionContext.Provider>
-        </div>
+        </Box>
       </Fade>
       <Fade in={session === null && !autoConnect}>
-        <div>
+        <Box position="absolute" top={0} minWidth="100vw" minHeight="100vh">
           <Container maxWidth="xs">
-            <Card>
-              <CardHeader
-                title="Create a New Session"
-                classes={{
-                  root: classes.headerRoot,
-                  title: classes.headerTitle,
-                }}
-              />
-              <CardContent>
-                <TextField
-                  label="WebSocket URL"
-                  value={webSocketUrl}
-                  onChange={onWebSocketUrlChange}
-                  error={!validateWebSocketUrl()}
-                  helperText={
-                    validateWebSocketUrl() ? "" : "Invalid WebSocket URL"
-                  }
-                  disabled={connecting}
-                  variant="outlined"
-                  fullWidth
-                />
-              </CardContent>
-              <CardActions>
-                <Button
-                  onClick={onConnectButton}
-                  disabled={!validateWebSocketUrl() || connecting}
-                  color="primary"
-                  variant="contained"
-                  fullWidth
-                >
-                  {connecting ? <CircularProgress size={24} /> : "Connect"}
-                </Button>
-              </CardActions>
-            </Card>
+            <Box paddingTop={8}>
+              <NewSessionCard />
+            </Box>
           </Container>
-        </div>
+        </Box>
       </Fade>
-    </div>
+    </Box>
   );
 }
 
