@@ -4,8 +4,9 @@ import React from "react";
 import {
   LoggerProvider,
   SessionProvider,
-  SimplePublisher,
-  SimpleSubscription,
+  SimplePublisherNode,
+  SimpleServiceNode,
+  SimpleSubscriptionNode,
 } from "./components";
 
 function App() {
@@ -16,10 +17,17 @@ function App() {
           <Container maxWidth="md">
             <Grid container spacing={4}>
               <Grid item sm={6} xs={12}>
-                <SimplePublisher />
+                <Grid container spacing={4}>
+                  <Grid item xs={12}>
+                    <SimplePublisherNode />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SimpleSubscriptionNode />
+                  </Grid>
+                </Grid>
               </Grid>
               <Grid item sm={6} xs={12}>
-                <SimpleSubscription />
+                <SimpleServiceNode />
               </Grid>
             </Grid>
           </Container>

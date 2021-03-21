@@ -30,20 +30,20 @@ const useStyles = makeStyles(() => {
   };
 });
 
-function SimpleSubscription() {
+function SimpleServiceNode() {
   const classes = useStyles();
   const logger = useLogger();
 
   const [node, setNode] = useState(null);
-  const [subscription, setSubscription] = useState(null);
-  const [messages, setMessages] = useState([]);
+  const [service, setService] = useState(null);
+  const [requests, setRequests] = useState([]);
 
   const session = useSession();
 
   useEffect(() => {
     if (node === null) {
       session
-        .createNode("simple_subscription")
+        .createNode("simpe_service")
         .then((newNode) => {
           setNode(newNode);
         })
@@ -51,31 +51,41 @@ function SimpleSubscription() {
           logger.error(`Failed to create a new Node! ${err.message}`);
           setNode(null);
         });
-    } else if (subscription === null) {
+    } else if (service === null) {
       node
-        .createSubscription("std_msgs/msg/String", "/topic", (message) => {
-          setMessages((prevMessages) => {
-            const newMessages = prevMessages.slice();
-            newMessages.unshift({
-              id: uuid(),
-              data: message.data,
+        .createService(
+          "example_interfaces/srv/AddTwoInts",
+          "/add_two_ints",
+          (request) => {
+            const sum = request.a + request.b;
+
+            setRequests((prevRequests) => {
+              const newRequests = prevRequests.slice();
+              newRequests.unshift({
+                id: uuid(),
+                a: request.a,
+                b: request.b,
+                sum,
+              });
+
+              return newRequests;
             });
 
-            return newMessages;
-          });
-        })
-        .then((newSubscription) => {
-          setSubscription(newSubscription);
+            return { sum };
+          }
+        )
+        .then((newService) => {
+          setService(newService);
         })
         .catch((err) => {
           logger.error(`Failed to create a new Subscription! ${err.message}`);
-          setSubscription(null);
+          setService(null);
         });
     }
   });
 
-  const MessageList = () => {
-    if (messages.length <= 0) {
+  const RequestList = () => {
+    if (requests.length <= 0) {
       return (
         <Grid
           container
@@ -88,31 +98,33 @@ function SimpleSubscription() {
       );
     }
 
-    const messageItems = messages.map((message) => {
+    const requestItems = requests.map((request) => {
       return (
-        <ListItem key={message.id} button>
-          <ListItemText primary={message.data} />
+        <ListItem key={request.id} button>
+          <ListItemText
+            primary={`${request.a} + ${request.b} = ${request.sum}`}
+          />
         </ListItem>
       );
     });
 
-    return <List disablePadding>{messageItems}</List>;
+    return <List disablePadding>{requestItems}</List>;
   };
 
   return (
-    <Card>
+    <Card raised>
       <CardHeader
-        title="Simple Subscription"
+        title="Simple Service Node"
         classes={{
           root: classes.headerRoot,
           title: classes.headerTitle,
         }}
       />
       <CardContent style={{ height: 200, overflow: "auto" }}>
-        <MessageList />
+        <RequestList />
       </CardContent>
     </Card>
   );
 }
 
-export default SimpleSubscription;
+export default SimpleServiceNode;

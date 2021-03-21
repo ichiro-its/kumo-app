@@ -1,6 +1,7 @@
-import SimplePublisher from "./SimplePublisher";
-import SimpleSubscription from "./SimpleSubscription";
+import SimplePublisherNode from "./SimplePublisherNode";
+import SimpleServiceNode from "./SimpleServiceNode";
+import SimpleSubscriptionNode from "./SimpleSubscriptionNode";
 
-export { SimplePublisher, SimpleSubscription };
+export { SimplePublisherNode, SimpleServiceNode, SimpleSubscriptionNode };
 export * from "./LoggerProvider";
 export * from "./SessionProvider";

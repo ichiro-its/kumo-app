@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => {
   };
 });
 
-function SimplePublisher() {
+function SimplePublisherNode() {
   const classes = useStyles();
   const logger = useLogger();
 
@@ -100,9 +100,9 @@ function SimplePublisher() {
   };
 
   return (
-    <Card>
+    <Card raised>
       <CardHeader
-        title="Simple Publisher"
+        title="Simple Publisher Node"
         classes={{
           root: classes.headerRoot,
           title: classes.headerTitle,
@@ -133,4 +133,4 @@ function SimplePublisher() {
   );
 }
 
-export default SimplePublisher;
+export default SimplePublisherNode;
