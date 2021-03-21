@@ -1,4 +1,4 @@
-import ContextProvider from "./ContextProvider";
+import SessionProvider from "./SessionProvider";
 
-export { ContextProvider };
+export { SessionProvider };
 export * from "./LoggerProvider";

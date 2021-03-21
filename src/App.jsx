@@ -1,14 +1,18 @@
+import { Container } from "@material-ui/core";
 import React from "react";
 
-import ContextProvider from "./components/ContextProvider";
+import { SessionProvider } from "./components/SessionProvider";
 import { LoggerProvider } from "./components/LoggerProvider";
+import SimpleSubscription from "./components/SimpleSubscription";
 
 function App() {
   return (
     <LoggerProvider>
-      <ContextProvider>
-        <div>Hello World</div>
-      </ContextProvider>
+      <SessionProvider>
+        <Container maxWidth="xs">
+          <SimpleSubscription />
+        </Container>
+      </SessionProvider>
     </LoggerProvider>
   );
 }

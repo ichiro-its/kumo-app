@@ -12,14 +12,18 @@ import {
   TextField,
 } from "@material-ui/core";
 
-import { Session } from "kumo-client";
+import { Session as Bridge } from "kumo-client";
 import PropTypes from "prop-types";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { useLogger } from "./LoggerProvider";
 import useStoreState from "../utilities";
 
-const ContextContext = createContext(null);
+const SessionContext = createContext(null);
+
+const useSession = () => {
+  return useContext(SessionContext);
+};
 
 const useStyles = makeStyles(() => {
   const theme = useTheme();
@@ -34,12 +38,12 @@ const useStyles = makeStyles(() => {
   };
 });
 
-function ContextProvider({ children }) {
+function SessionProvider({ children }) {
   const classes = useStyles();
   const logger = useLogger();
 
+  const [bridge, setBridge] = useState(null);
   const [session, setSession] = useState(null);
-  const [context, setContext] = useState(null);
   const [connecting, setConnecting] = useState(false);
 
   const [webSocketUrl, setWebSocketUrl] = useStoreState(
@@ -50,12 +54,12 @@ function ContextProvider({ children }) {
   const [autoConnect, setAutoConnect] = useStoreState("autoConnect", false);
 
   useEffect(() => {
-    if (session === null) {
-      const newSession = new Session()
-        .onConnect((newContext) => {
+    if (bridge === null) {
+      const newBridge = new Bridge()
+        .onConnect((newSession) => {
           logger.success("Connected to the bridge server!");
 
-          setContext(newContext);
+          setSession(newSession);
           setConnecting(false);
           setAutoConnect(true);
         })
@@ -64,7 +68,7 @@ function ContextProvider({ children }) {
             `Disconnected from the bridge server! ${reason} (${code})`
           );
 
-          setContext(null);
+          setSession(null);
           setConnecting(false);
           setAutoConnect(false);
         })
@@ -72,15 +76,15 @@ function ContextProvider({ children }) {
           logger.error(`Found error! ${err.message}`);
         });
 
-      setSession(newSession);
-    } else if (context === null && autoConnect) {
-      session.connect(webSocketUrl);
+      setBridge(newBridge);
+    } else if (session === null && autoConnect) {
+      bridge.connect(webSocketUrl);
     }
   });
 
   const onConnectButton = () => {
     setTimeout(() => {
-      session.connect(webSocketUrl);
+      bridge.connect(webSocketUrl);
     }, 500);
 
     setConnecting(true);
@@ -97,14 +101,14 @@ function ContextProvider({ children }) {
 
   return (
     <div>
-      <Fade in={context !== null}>
+      <Fade in={session !== null}>
         <div>
-          <ContextContext.Provider value={context}>
-            {children}
-          </ContextContext.Provider>
+          <SessionContext.Provider value={session}>
+            {session !== null ? children : ""}
+          </SessionContext.Provider>
         </div>
       </Fade>
-      <Fade in={context === null && !autoConnect}>
+      <Fade in={session === null && !autoConnect}>
         <div>
           <Container maxWidth="xs">
             <Card>
@@ -148,11 +152,11 @@ function ContextProvider({ children }) {
   );
 }
 
-ContextProvider.propTypes = {
+SessionProvider.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
 };
 
-export default ContextProvider;
+export { SessionProvider, useSession };
