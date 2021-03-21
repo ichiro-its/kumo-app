@@ -78,7 +78,7 @@ function SimpleServiceNode() {
           setService(newService);
         })
         .catch((err) => {
-          logger.error(`Failed to create a new Subscription! ${err.message}`);
+          logger.error(`Failed to create a new Service! ${err.message}`);
           setService(null);
         });
     }

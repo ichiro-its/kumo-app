@@ -4,6 +4,7 @@ import React from "react";
 import {
   LoggerProvider,
   SessionProvider,
+  SimpleClientNode,
   SimplePublisherNode,
   SimpleServiceNode,
   SimpleSubscriptionNode,
@@ -27,7 +28,14 @@ function App() {
                 </Grid>
               </Grid>
               <Grid item sm={6} xs={12}>
-                <SimpleServiceNode />
+                <Grid container spacing={4}>
+                  <Grid item xs={12}>
+                    <SimpleClientNode />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SimpleServiceNode />
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Container>
