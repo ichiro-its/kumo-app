@@ -9,9 +9,10 @@ import {
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import BoxedCircularProgress from "./BoxedCircularProgress";
-import { NodeProvider, useService } from "./NodeProvider";
-import TitledCard from "./TitledCard";
+import { useService } from "../../hooks";
+import BoxedCircularProgress from "../BoxedCircularProgress";
+import NodeProvider from "../NodeProvider";
+import TitledCard from "../TitledCard";
 
 function SimpleService() {
   const [requests, setRequests] = useState([]);

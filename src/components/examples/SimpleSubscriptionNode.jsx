@@ -9,9 +9,10 @@ import {
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import BoxedCircularProgress from "./BoxedCircularProgress";
-import { NodeProvider, useSubscription } from "./NodeProvider";
-import TitledCard from "./TitledCard";
+import { useSubscription } from "../../hooks";
+import BoxedCircularProgress from "../BoxedCircularProgress";
+import NodeProvider from "../NodeProvider";
+import TitledCard from "../TitledCard";
 
 function SimpleSubscription() {
   const [messages, setMessages] = useState([]);

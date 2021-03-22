@@ -9,34 +9,19 @@ import {
 
 import { Session as Bridge } from "kumo-client";
 import PropTypes from "prop-types";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import Store from "store2";
+import React, { useEffect, useState } from "react";
 
-import { useLogger } from "./LoggerProvider";
 import TitledCard from "./TitledCard";
-
-const SessionContext = createContext(null);
-
-const useSession = () => {
-  return useContext(SessionContext);
-};
-
-function useStoreState(key, initialValue) {
-  const [state, setState] = useState(Store.get(key, initialValue));
-
-  return [
-    state,
-    (newState) => {
-      setState(newState);
-      Store.set(key, newState);
-    },
-  ];
-}
+import {
+  SessionContext,
+  useLogger,
+  useStateOnce,
+  useStoreState,
+} from "../hooks";
 
 function SessionProvider({ children }) {
   const logger = useLogger();
 
-  const [bridge, setBridge] = useState(null);
   const [session, setSession] = useState(null);
   const [connecting, setConnecting] = useState(false);
 
@@ -47,32 +32,32 @@ function SessionProvider({ children }) {
 
   const [autoConnect, setAutoConnect] = useStoreState("autoConnect", false);
 
+  const bridge = useStateOnce(() => {
+    return new Bridge()
+      .onConnect((newSession) => {
+        logger.success(`Connected to the bridge server on ${webSocketUrl}!`);
+
+        setSession(newSession);
+        setConnecting(false);
+        setAutoConnect(true);
+      })
+      .onDisconnect((code, reason) => {
+        logger.error(
+          "Disconnected from the bridge server!" +
+            ` ${reason || "no reason"} (${code})`
+        );
+
+        setSession(null);
+        setConnecting(false);
+        setAutoConnect(false);
+      })
+      .onError((err) => {
+        logger.error(`Found error! ${err.message}`);
+      });
+  });
+
   useEffect(() => {
-    if (bridge === null) {
-      const newBridge = new Bridge()
-        .onConnect((newSession) => {
-          logger.success(`Connected to the bridge server on ${webSocketUrl}!`);
-
-          setSession(newSession);
-          setConnecting(false);
-          setAutoConnect(true);
-        })
-        .onDisconnect((code, reason) => {
-          logger.error(
-            "Disconnected from the bridge server!" +
-              ` ${reason || "no reason"} (${code})`
-          );
-
-          setSession(null);
-          setConnecting(false);
-          setAutoConnect(false);
-        })
-        .onError((err) => {
-          logger.error(`Found error! ${err.message}`);
-        });
-
-      setBridge(newBridge);
-    } else if (session === null && autoConnect) {
+    if (bridge !== null && session === null && autoConnect) {
       bridge.connect(webSocketUrl);
     }
   });
@@ -149,4 +134,4 @@ SessionProvider.propTypes = {
   ]).isRequired,
 };
 
-export { SessionProvider, useSession };
+export default SessionProvider;

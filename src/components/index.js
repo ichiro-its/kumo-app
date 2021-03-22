@@ -1,19 +1,7 @@
-import BoxedCircularProgress from "./BoxedCircularProgress";
-import SimpleClientNode from "./SimpleClientNode";
-import SimplePublisherNode from "./SimplePublisherNode";
-import SimpleServiceNode from "./SimpleServiceNode";
-import SimpleSubscriptionNode from "./SimpleSubscriptionNode";
-import TitledCard from "./TitledCard";
+export * from "./examples";
 
-export {
-  BoxedCircularProgress,
-  SimpleClientNode,
-  SimplePublisherNode,
-  SimpleServiceNode,
-  SimpleSubscriptionNode,
-  TitledCard,
-};
-
-export * from "./LoggerProvider";
-export * from "./NodeProvider";
-export * from "./SessionProvider";
+export { default as BoxedCircularProgress } from "./BoxedCircularProgress";
+export { default as LoggerProvider } from "./LoggerProvider";
+export { default as NodeProvider } from "./NodeProvider";
+export { default as SessionProvider } from "./SessionProvider";
+export { default as TitledCard } from "./TitledCard";

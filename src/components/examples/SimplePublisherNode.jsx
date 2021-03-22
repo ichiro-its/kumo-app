@@ -2,10 +2,10 @@ import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import React, { useState } from "react";
 
-import BoxedCircularProgress from "./BoxedCircularProgress";
-import { useLogger } from "./LoggerProvider";
-import { NodeProvider, usePublisher } from "./NodeProvider";
-import TitledCard from "./TitledCard";
+import { useLogger, usePublisher } from "../../hooks";
+import BoxedCircularProgress from "../BoxedCircularProgress";
+import NodeProvider from "../NodeProvider";
+import TitledCard from "../TitledCard";
 
 function SimplePublisher() {
   const logger = useLogger();
