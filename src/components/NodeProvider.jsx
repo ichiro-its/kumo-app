@@ -1,7 +1,7 @@
-import { Box, CircularProgress } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+import BoxedCircularProgress from "./BoxedCircularProgress";
 import { useLogger } from "./LoggerProvider";
 import { useSession } from "./SessionProvider";
 
@@ -25,7 +25,6 @@ function NodeProvider({ children, nodeName }) {
         session
           .createNode(nodeName)
           .then((newNode) => {
-            logger.success(`Node ${nodeName} created!`);
             setNode(newNode);
           })
           .catch((err) => {
@@ -39,17 +38,7 @@ function NodeProvider({ children, nodeName }) {
   });
 
   if (node === null) {
-    return (
-      <Box
-        display="flex"
-        minHeight={100}
-        height="100%"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <BoxedCircularProgress />;
   }
 
   return <NodeContext.Provider value={node}>{children}</NodeContext.Provider>;
