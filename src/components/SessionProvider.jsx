@@ -1,15 +1,10 @@
 import {
   Box,
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
   CircularProgress,
   Container,
   Fade,
-  makeStyles,
-  useTheme,
+  Grid,
   TextField,
 } from "@material-ui/core";
 
@@ -18,6 +13,7 @@ import PropTypes from "prop-types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { useLogger } from "./LoggerProvider";
+import TitledCard from "./TitledCard";
 import useStoreState from "../utilities";
 
 const SessionContext = createContext(null);
@@ -26,21 +22,7 @@ const useSession = () => {
   return useContext(SessionContext);
 };
 
-const useStyles = makeStyles(() => {
-  const theme = useTheme();
-
-  return {
-    headerRoot: {
-      backgroundColor: theme.palette.primary.main,
-    },
-    headerTitle: {
-      color: theme.palette.common.white,
-    },
-  };
-});
-
 function SessionProvider({ children }) {
-  const classes = useStyles();
   const logger = useLogger();
 
   const [bridge, setBridge] = useState(null);
@@ -101,38 +83,33 @@ function SessionProvider({ children }) {
 
   const NewSessionCard = () => {
     return (
-      <Card raised>
-        <CardHeader
-          title="Create a New Session"
-          classes={{
-            root: classes.headerRoot,
-            title: classes.headerTitle,
-          }}
-        />
-        <CardContent>
-          <TextField
-            label="WebSocket URL"
-            value={webSocketUrl}
-            onChange={onWebSocketUrlChange}
-            error={!validateWebSocketUrl()}
-            helperText={validateWebSocketUrl() ? "" : "Invalid WebSocket URL"}
-            disabled={connecting}
-            variant="outlined"
-            fullWidth
-          />
-        </CardContent>
-        <CardActions>
-          <Button
-            onClick={onConnect}
-            disabled={!validateWebSocketUrl() || connecting}
-            color="primary"
-            variant="contained"
-            fullWidth
-          >
-            {connecting ? <CircularProgress size={24} /> : "Connect"}
-          </Button>
-        </CardActions>
-      </Card>
+      <TitledCard title="Create a New Session" raised>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              label="WebSocket URL"
+              value={webSocketUrl}
+              onChange={onWebSocketUrlChange}
+              error={!validateWebSocketUrl()}
+              helperText={validateWebSocketUrl() ? "" : "Invalid WebSocket URL"}
+              disabled={connecting}
+              variant="outlined"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              onClick={onConnect}
+              disabled={!validateWebSocketUrl() || connecting}
+              color="primary"
+              variant="contained"
+              fullWidth
+            >
+              {connecting ? <CircularProgress size={24} /> : "Connect"}
+            </Button>
+          </Grid>
+        </Grid>
+      </TitledCard>
     );
   };
 

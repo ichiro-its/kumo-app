@@ -1,35 +1,12 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CircularProgress,
-  makeStyles,
-  TextField,
-  useTheme,
-} from "@material-ui/core";
+import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import React, { useEffect, useState } from "react";
 
 import { useLogger } from "./LoggerProvider";
 import { useSession } from "./SessionProvider";
-
-const useStyles = makeStyles(() => {
-  const theme = useTheme();
-
-  return {
-    headerRoot: {
-      backgroundColor: theme.palette.primary.main,
-    },
-    headerTitle: {
-      color: theme.palette.common.white,
-    },
-  };
-});
+import TitledCard from "./TitledCard";
 
 function SimplePublisherNode() {
-  const classes = useStyles();
   const logger = useLogger();
 
   const [node, setNode] = useState(null);
@@ -100,36 +77,31 @@ function SimplePublisherNode() {
   };
 
   return (
-    <Card raised>
-      <CardHeader
-        title="Simple Publisher Node"
-        classes={{
-          root: classes.headerRoot,
-          title: classes.headerTitle,
-        }}
-      />
-      <CardContent>
-        <TextField
-          label="Data"
-          value={data}
-          onChange={onDataChange}
-          disabled={publisher === null || publishing}
-          variant="outlined"
-          fullWidth
-        />
-      </CardContent>
-      <CardActions>
-        <Button
-          onClick={onPublish}
-          disabled={publisher === null || publishing}
-          color="primary"
-          variant="contained"
-          fullWidth
-        >
-          {publishing ? <CircularProgress size={24} /> : "Publish"}
-        </Button>
-      </CardActions>
-    </Card>
+    <TitledCard title="Simple Publisher Node" raised>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TextField
+            label="Data"
+            value={data}
+            onChange={onDataChange}
+            disabled={publisher === null || publishing}
+            variant="outlined"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            onClick={onPublish}
+            disabled={publisher === null || publishing}
+            color="primary"
+            variant="contained"
+            fullWidth
+          >
+            {publishing ? <CircularProgress size={24} /> : "Publish"}
+          </Button>
+        </Grid>
+      </Grid>
+    </TitledCard>
   );
 }
 

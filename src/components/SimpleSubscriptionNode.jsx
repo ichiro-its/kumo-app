@@ -1,14 +1,9 @@
 import {
-  Card,
-  CardContent,
-  CardHeader,
   Grid,
   List,
   ListItem,
   ListItemText,
-  makeStyles,
   Typography,
-  useTheme,
 } from "@material-ui/core";
 
 import React, { useEffect, useState } from "react";
@@ -16,22 +11,9 @@ import { v4 as uuid } from "uuid";
 
 import { useLogger } from "./LoggerProvider";
 import { useSession } from "./SessionProvider";
-
-const useStyles = makeStyles(() => {
-  const theme = useTheme();
-
-  return {
-    headerRoot: {
-      backgroundColor: theme.palette.primary.main,
-    },
-    headerTitle: {
-      color: theme.palette.common.white,
-    },
-  };
-});
+import TitledCard from "./TitledCard";
 
 function SimpleSubscriptionNode() {
-  const classes = useStyles();
   const logger = useLogger();
 
   const [node, setNode] = useState(null);
@@ -100,18 +82,9 @@ function SimpleSubscriptionNode() {
   };
 
   return (
-    <Card raised>
-      <CardHeader
-        title="Simple Subscription Node"
-        classes={{
-          root: classes.headerRoot,
-          title: classes.headerTitle,
-        }}
-      />
-      <CardContent style={{ height: 200, overflow: "auto" }}>
-        <MessageList />
-      </CardContent>
-    </Card>
+    <TitledCard title="Simple Subscription Node" raised>
+      <MessageList />
+    </TitledCard>
   );
 }
 

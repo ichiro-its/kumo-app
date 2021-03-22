@@ -1,36 +1,12 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CircularProgress,
-  Grid,
-  makeStyles,
-  TextField,
-  useTheme,
-} from "@material-ui/core";
+import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import React, { useEffect, useState } from "react";
 
 import { useLogger } from "./LoggerProvider";
 import { useSession } from "./SessionProvider";
-
-const useStyles = makeStyles(() => {
-  const theme = useTheme();
-
-  return {
-    headerRoot: {
-      backgroundColor: theme.palette.primary.main,
-    },
-    headerTitle: {
-      color: theme.palette.common.white,
-    },
-  };
-});
+import TitledCard from "./TitledCard";
 
 function SimpleClientNode() {
-  const classes = useStyles();
   const logger = useLogger();
 
   const [node, setNode] = useState(null);
@@ -101,61 +77,52 @@ function SimpleClientNode() {
   };
 
   return (
-    <Card raised>
-      <CardHeader
-        title="Simple Client Node"
-        classes={{
-          root: classes.headerRoot,
-          title: classes.headerTitle,
-        }}
-      />
-      <CardContent>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <TextField
-              label="A"
-              value={a}
-              onChange={onAChange}
-              disabled={client === null || calling}
-              variant="outlined"
-              type="number"
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={3}>
-            <TextField
-              label="B"
-              value={b}
-              onChange={onBChange}
-              disabled={client === null || calling}
-              variant="outlined"
-              type="number"
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label="Result"
-              value={result}
-              variant="outlined"
-              fullWidth
-              disabled
-            />
-          </Grid>
+    <TitledCard title="Simple Client Node" raised>
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <TextField
+            label="A"
+            value={a}
+            onChange={onAChange}
+            disabled={client === null || calling}
+            variant="outlined"
+            type="number"
+            fullWidth
+          />
         </Grid>
-      </CardContent>
-      <CardActions>
-        <Button
-          onClick={onCall}
-          disabled={client === null || calling}
-          color="primary"
-          variant="contained"
-          fullWidth
-        >
-          {calling ? <CircularProgress size={24} /> : "Call"}
-        </Button>
-      </CardActions>
-    </Card>
+        <Grid item xs={3}>
+          <TextField
+            label="B"
+            value={b}
+            onChange={onBChange}
+            disabled={client === null || calling}
+            variant="outlined"
+            type="number"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            label="Result"
+            value={result}
+            variant="outlined"
+            fullWidth
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            onClick={onCall}
+            disabled={client === null || calling}
+            color="primary"
+            variant="contained"
+            fullWidth
+          >
+            {calling ? <CircularProgress size={24} /> : "Call"}
+          </Button>
+        </Grid>
+      </Grid>
+    </TitledCard>
   );
 }
 
