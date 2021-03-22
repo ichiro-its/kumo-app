@@ -53,11 +53,11 @@ function SimplePublisherNode() {
     setData(strings.join(" "));
   };
 
-  const onDataChange = (event) => {
-    setData(event.target.value);
+  const handleDataChange = (ev) => {
+    setData(ev.target.value);
   };
 
-  const onPublish = () => {
+  const handlePublish = () => {
     if (publisher !== null) {
       setPublishing(true);
       setTimeout(() => {
@@ -83,7 +83,7 @@ function SimplePublisherNode() {
           <TextField
             label="Data"
             value={data}
-            onChange={onDataChange}
+            onChange={handleDataChange}
             disabled={publisher === null || publishing}
             variant="outlined"
             fullWidth
@@ -91,7 +91,7 @@ function SimplePublisherNode() {
         </Grid>
         <Grid item xs={12}>
           <Button
-            onClick={onPublish}
+            onClick={handlePublish}
             disabled={publisher === null || publishing}
             color="primary"
             variant="contained"

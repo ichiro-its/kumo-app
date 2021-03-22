@@ -1,4 +1,5 @@
 import {
+  Box,
   Grid,
   List,
   ListItem,
@@ -72,7 +73,7 @@ function SimpleSubscriptionNode() {
 
     const messageItems = messages.map((message) => {
       return (
-        <ListItem key={message.id} button>
+        <ListItem key={message.id} button divider>
           <ListItemText primary={message.data} />
         </ListItem>
       );
@@ -82,8 +83,10 @@ function SimpleSubscriptionNode() {
   };
 
   return (
-    <TitledCard title="Simple Subscription Node" raised>
-      <MessageList />
+    <TitledCard title="Simple Subscription Node" raised noPadding>
+      <Box height={200} overflow="auto">
+        <MessageList />
+      </Box>
     </TitledCard>
   );
 }

@@ -1,4 +1,5 @@
 import {
+  Box,
   Grid,
   List,
   ListItem,
@@ -82,7 +83,7 @@ function SimpleServiceNode() {
 
     const requestItems = requests.map((request) => {
       return (
-        <ListItem key={request.id} button>
+        <ListItem key={request.id} button divider>
           <ListItemText
             primary={`${request.a} + ${request.b} = ${request.sum}`}
           />
@@ -94,8 +95,10 @@ function SimpleServiceNode() {
   };
 
   return (
-    <TitledCard title="Simple Service Node" raised>
-      <RequestList />
+    <TitledCard title="Simple Service Node" raised noPadding>
+      <Box height={200} overflow="auto">
+        <RequestList />
+      </Box>
     </TitledCard>
   );
 }

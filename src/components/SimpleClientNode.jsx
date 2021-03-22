@@ -47,15 +47,17 @@ function SimpleClientNode() {
     }
   });
 
-  const onAChange = (event) => {
-    setA(event.target.value);
+  const handleAChange = (ev) => {
+    const newA = parseInt(ev.target.value, 10);
+    setA(Number.isNaN(newA) ? a : newA);
   };
 
-  const onBChange = (event) => {
-    setB(event.target.value);
+  const handleBChange = (ev) => {
+    const newB = parseInt(ev.target.value, 10);
+    setB(Number.isNaN(newB) ? b : newB);
   };
 
-  const onCall = () => {
+  const handleCall = () => {
     if (client !== null) {
       setCalling(true);
       setTimeout(() => {
@@ -83,7 +85,7 @@ function SimpleClientNode() {
           <TextField
             label="A"
             value={a}
-            onChange={onAChange}
+            onChange={handleAChange}
             disabled={client === null || calling}
             variant="outlined"
             type="number"
@@ -94,7 +96,7 @@ function SimpleClientNode() {
           <TextField
             label="B"
             value={b}
-            onChange={onBChange}
+            onChange={handleBChange}
             disabled={client === null || calling}
             variant="outlined"
             type="number"
@@ -112,7 +114,7 @@ function SimpleClientNode() {
         </Grid>
         <Grid item xs={12}>
           <Button
-            onClick={onCall}
+            onClick={handleCall}
             disabled={client === null || calling}
             color="primary"
             variant="contained"

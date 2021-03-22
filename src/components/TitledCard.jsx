@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => {
   };
 });
 
-function TitledCard({ children, title, raised }) {
+function TitledCard({ children, title, raised, noPadding }) {
   const classes = useStyles();
 
   return (
@@ -34,7 +34,9 @@ function TitledCard({ children, title, raised }) {
           title: classes.headerTitle,
         }}
       />
-      <CardContent>{children}</CardContent>
+      <CardContent style={{ padding: noPadding ? 0 : null }}>
+        {children}
+      </CardContent>
     </Card>
   );
 }
@@ -46,11 +48,13 @@ TitledCard.propTypes = {
   ]).isRequired,
   title: PropTypes.string,
   raised: PropTypes.bool,
+  noPadding: PropTypes.bool,
 };
 
 TitledCard.defaultProps = {
   title: "",
   raised: false,
+  noPadding: false,
 };
 
 export default TitledCard;
