@@ -2,7 +2,7 @@ import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import React, { useState } from "react";
 
-import { useClient, useLogger } from "../../hooks";
+import { useClient, useHandleProcess, useLogger } from "../../hooks";
 import BoxedCircularProgress from "../BoxedCircularProgress";
 import NodeProvider from "../NodeProvider";
 import TitledCard from "../TitledCard";
@@ -22,11 +22,21 @@ function SimpleClient() {
   const [a, setA] = useState(randomInteger);
   const [b, setB] = useState(randomInteger);
   const [result, setResult] = useState("");
-  const [calling, setCalling] = useState(false);
 
-  if (client === null) {
-    return <BoxedCircularProgress />;
-  }
+  const [calling, handleCall] = useHandleProcess(async () => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (client !== null) {
+        const response = await client.call({ a, b });
+
+        setA(randomInteger());
+        setB(randomInteger());
+        setResult(`${a} + ${b} = ${response.sum}`);
+      }
+    } catch (err) {
+      logger.error(`Failed to call data! ${err.message}`);
+    }
+  });
 
   const handleAChange = (ev) => {
     const newA = parseInt(ev.target.value, 10);
@@ -38,26 +48,9 @@ function SimpleClient() {
     setB(Number.isNaN(newB) ? b : newB);
   };
 
-  const handleCall = () => {
-    if (client !== null) {
-      setCalling(true);
-      setTimeout(() => {
-        client
-          .call({ a, b })
-          .then((response) => {
-            setA(randomInteger());
-            setB(randomInteger());
-            setResult(`${a} + ${b} = ${response.sum}`);
-          })
-          .catch((err) => {
-            logger.error(`Failed to call data! ${err.message}`);
-          })
-          .finally(() => {
-            setCalling(false);
-          });
-      }, 500);
-    }
-  };
+  if (client === null) {
+    return <BoxedCircularProgress />;
+  }
 
   return (
     <Grid container spacing={2}>

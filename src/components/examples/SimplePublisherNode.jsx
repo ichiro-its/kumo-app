@@ -2,7 +2,7 @@ import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import React, { useState } from "react";
 
-import { useLogger, usePublisher } from "../../hooks";
+import { useHandleProcess, useLogger, usePublisher } from "../../hooks";
 import BoxedCircularProgress from "../BoxedCircularProgress";
 import NodeProvider from "../NodeProvider";
 import TitledCard from "../TitledCard";
@@ -12,11 +12,6 @@ function SimplePublisher() {
   const publisher = usePublisher("std_msgs/msg/String", "/topic");
 
   const [data, setData] = useState("Hello World! 0");
-  const [publishing, setPublishing] = useState(false);
-
-  if (publisher === null) {
-    return <BoxedCircularProgress />;
-  }
 
   const incrementData = () => {
     const strings = data.split(" ");
@@ -30,28 +25,26 @@ function SimplePublisher() {
     setData(strings.join(" "));
   };
 
+  const [publishing, handlePublish] = useHandleProcess(async () => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (publisher !== null) {
+        await publisher.publish({ data });
+
+        incrementData();
+      }
+    } catch (err) {
+      logger.error(`Failed to publish data! ${err.message}`);
+    }
+  });
+
   const handleDataChange = (ev) => {
     setData(ev.target.value);
   };
 
-  const handlePublish = () => {
-    if (publisher !== null) {
-      setPublishing(true);
-      setTimeout(() => {
-        publisher
-          .publish({ data })
-          .then(() => {
-            incrementData();
-          })
-          .catch((err) => {
-            logger.error(`Failed to publish data! ${err.message}`);
-          })
-          .finally(() => {
-            setPublishing(false);
-          });
-      }, 500);
-    }
-  };
+  if (publisher === null) {
+    return <BoxedCircularProgress />;
+  }
 
   return (
     <Grid container spacing={2}>
