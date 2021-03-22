@@ -10,16 +10,28 @@ import {
 import { Session as Bridge } from "kumo-client";
 import PropTypes from "prop-types";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import Store from "store2";
 
 import { useLogger } from "./LoggerProvider";
 import TitledCard from "./TitledCard";
-import useStoreState from "../utilities";
 
 const SessionContext = createContext(null);
 
 const useSession = () => {
   return useContext(SessionContext);
 };
+
+function useStoreState(key, initialValue) {
+  const [state, setState] = useState(Store.get(key, initialValue));
+
+  return [
+    state,
+    (newState) => {
+      setState(newState);
+      Store.set(key, newState);
+    },
+  ];
+}
 
 function SessionProvider({ children }) {
   const logger = useLogger();
