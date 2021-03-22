@@ -3,7 +3,6 @@ import {
   Button,
   CircularProgress,
   Container,
-  Fade,
   Grid,
   TextField,
 } from "@material-ui/core";
@@ -40,7 +39,7 @@ function SessionProvider({ children }) {
     if (bridge === null) {
       const newBridge = new Bridge()
         .onConnect((newSession) => {
-          logger.success("Connected to the bridge server!");
+          logger.success(`Connected to the bridge server on ${webSocketUrl}!`);
 
           setSession(newSession);
           setConnecting(false);
@@ -48,7 +47,8 @@ function SessionProvider({ children }) {
         })
         .onDisconnect((code, reason) => {
           logger.error(
-            `Disconnected from the bridge server! ${reason} (${code})`
+            "Disconnected from the bridge server!" +
+              ` ${reason || "no reason"} (${code})`
           );
 
           setSession(null);
@@ -65,7 +65,7 @@ function SessionProvider({ children }) {
     }
   });
 
-  const onConnect = () => {
+  const handleConnect = () => {
     setConnecting(true);
     setTimeout(() => {
       bridge.connect(webSocketUrl);
@@ -81,57 +81,52 @@ function SessionProvider({ children }) {
     setAutoConnect(false);
   };
 
-  const NewSessionCard = () => {
+  if (session === null) {
+    if (autoConnect) {
+      return null;
+    }
+
     return (
-      <TitledCard title="Create a New Session" raised>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              label="WebSocket URL"
-              value={webSocketUrl}
-              onChange={onWebSocketUrlChange}
-              error={!validateWebSocketUrl()}
-              helperText={validateWebSocketUrl() ? "" : "Invalid WebSocket URL"}
-              disabled={connecting}
-              variant="outlined"
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              onClick={onConnect}
-              disabled={!validateWebSocketUrl() || connecting}
-              color="primary"
-              variant="contained"
-              fullWidth
-            >
-              {connecting ? <CircularProgress size={24} /> : "Connect"}
-            </Button>
-          </Grid>
-        </Grid>
-      </TitledCard>
+      <Container maxWidth="xs">
+        <Box paddingTop={8}>
+          <TitledCard title="Create a New Session" raised>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  label="WebSocket URL"
+                  value={webSocketUrl}
+                  onChange={onWebSocketUrlChange}
+                  error={!validateWebSocketUrl()}
+                  helperText={
+                    validateWebSocketUrl() ? null : "Invalid WebSocket URL"
+                  }
+                  disabled={connecting}
+                  variant="outlined"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  onClick={handleConnect}
+                  disabled={!validateWebSocketUrl() || connecting}
+                  color="primary"
+                  variant="contained"
+                  fullWidth
+                >
+                  {connecting ? <CircularProgress size={24} /> : "Connect"}
+                </Button>
+              </Grid>
+            </Grid>
+          </TitledCard>
+        </Box>
+      </Container>
     );
-  };
+  }
 
   return (
-    <Box>
-      <Fade in={session !== null}>
-        <Box>
-          <SessionContext.Provider value={session}>
-            {session !== null ? children : ""}
-          </SessionContext.Provider>
-        </Box>
-      </Fade>
-      <Fade in={session === null && !autoConnect}>
-        <Box position="absolute" top={0} minWidth="100vw" minHeight="100vh">
-          <Container maxWidth="xs">
-            <Box paddingTop={8}>
-              <NewSessionCard />
-            </Box>
-          </Container>
-        </Box>
-      </Fade>
-    </Box>
+    <SessionContext.Provider value={session}>
+      {children}
+    </SessionContext.Provider>
   );
 }
 

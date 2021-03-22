@@ -1,6 +1,5 @@
 import {
   Box,
-  Grid,
   List,
   ListItem,
   ListItemText,
@@ -11,30 +10,20 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 import { useLogger } from "./LoggerProvider";
-import { useSession } from "./SessionProvider";
+import { NodeProvider, useNode } from "./NodeProvider";
 import TitledCard from "./TitledCard";
 
-function SimpleServiceNode() {
+function SimpleService() {
   const logger = useLogger();
+  const node = useNode();
 
-  const [node, setNode] = useState(null);
   const [service, setService] = useState(null);
+  const [creating, setCreating] = useState(null);
   const [requests, setRequests] = useState([]);
 
-  const session = useSession();
-
   useEffect(() => {
-    if (node === null) {
-      session
-        .createNode("simpe_service")
-        .then((newNode) => {
-          setNode(newNode);
-        })
-        .catch((err) => {
-          logger.error(`Failed to create a new Node! ${err.message}`);
-          setNode(null);
-        });
-    } else if (service === null) {
+    if (service === null && !creating) {
+      setCreating(true);
       node
         .createService(
           "example_interfaces/srv/AddTwoInts",
@@ -63,6 +52,9 @@ function SimpleServiceNode() {
         .catch((err) => {
           logger.error(`Failed to create a new Service! ${err.message}`);
           setService(null);
+        })
+        .finally(() => {
+          setCreating(false);
         });
     }
   });
@@ -70,14 +62,14 @@ function SimpleServiceNode() {
   const RequestList = () => {
     if (requests.length <= 0) {
       return (
-        <Grid
-          container
-          style={{ minHeight: "100%" }}
-          justify="center"
+        <Box
+          display="flex"
+          height="100%"
           alignItems="center"
+          justifyContent="center"
         >
           <Typography>No data</Typography>
-        </Grid>
+        </Box>
       );
     }
 
@@ -95,10 +87,18 @@ function SimpleServiceNode() {
   };
 
   return (
-    <TitledCard title="Simple Service Node" raised noPadding>
-      <Box height={200} overflow="auto">
-        <RequestList />
-      </Box>
+    <Box height={200} overflow="auto">
+      <RequestList />
+    </Box>
+  );
+}
+
+function SimpleServiceNode() {
+  return (
+    <TitledCard title="Simple Service Node" raised disablePadding>
+      <NodeProvider nodeName="simple_service">
+        <SimpleService />
+      </NodeProvider>
     </TitledCard>
   );
 }

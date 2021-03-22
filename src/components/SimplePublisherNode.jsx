@@ -3,32 +3,22 @@ import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 
 import { useLogger } from "./LoggerProvider";
-import { useSession } from "./SessionProvider";
+import { NodeProvider, useNode } from "./NodeProvider";
 import TitledCard from "./TitledCard";
 
-function SimplePublisherNode() {
+function SimplePublisher() {
   const logger = useLogger();
+  const node = useNode();
 
-  const [node, setNode] = useState(null);
   const [publisher, setPublisher] = useState(null);
+  const [creating, setCreating] = useState(null);
   const [publishing, setPublishing] = useState(false);
 
   const [data, setData] = useState("Hello World! 0");
 
-  const session = useSession();
-
   useEffect(() => {
-    if (node === null) {
-      session
-        .createNode("simple_publisher")
-        .then((newNode) => {
-          setNode(newNode);
-        })
-        .catch((err) => {
-          logger.error(`Failed to create a new Node! ${err.message}`);
-          setNode(null);
-        });
-    } else if (publisher === null) {
+    if (publisher === null && !creating) {
+      setCreating(true);
       node
         .createPublisher("std_msgs/msg/String", "/topic")
         .then((newPublisher) => {
@@ -37,6 +27,9 @@ function SimplePublisherNode() {
         .catch((err) => {
           logger.error(`Failed to create a new Publisher! ${err.message}`);
           setPublisher(null);
+        })
+        .finally(() => {
+          setCreating(false);
         });
     }
   });
@@ -77,30 +70,38 @@ function SimplePublisherNode() {
   };
 
   return (
-    <TitledCard title="Simple Publisher Node" raised>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            label="Data"
-            value={data}
-            onChange={handleDataChange}
-            disabled={publisher === null || publishing}
-            variant="outlined"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            onClick={handlePublish}
-            disabled={publisher === null || publishing}
-            color="primary"
-            variant="contained"
-            fullWidth
-          >
-            {publishing ? <CircularProgress size={24} /> : "Publish"}
-          </Button>
-        </Grid>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <TextField
+          label="Data"
+          value={data}
+          onChange={handleDataChange}
+          disabled={publisher === null || publishing}
+          variant="outlined"
+          fullWidth
+        />
       </Grid>
+      <Grid item xs={12}>
+        <Button
+          onClick={handlePublish}
+          disabled={publisher === null || publishing}
+          color="primary"
+          variant="contained"
+          fullWidth
+        >
+          {publishing ? <CircularProgress size={24} /> : "Publish"}
+        </Button>
+      </Grid>
+    </Grid>
+  );
+}
+
+function SimplePublisherNode() {
+  return (
+    <TitledCard title="Simple Publisher Node" raised>
+      <NodeProvider nodeName="simple_publisher">
+        <SimplePublisher />
+      </NodeProvider>
     </TitledCard>
   );
 }

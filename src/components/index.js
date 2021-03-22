@@ -13,4 +13,5 @@ export {
 };
 
 export * from "./LoggerProvider";
+export * from "./NodeProvider";
 export * from "./SessionProvider";
