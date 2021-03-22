@@ -1,18 +1,19 @@
 import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
+import BoxedCircularProgress from "./BoxedCircularProgress";
 import { useLogger } from "./LoggerProvider";
-import { NodeProvider, useNode } from "./NodeProvider";
+import { NodeProvider, useClient } from "./NodeProvider";
 import TitledCard from "./TitledCard";
 
 function SimpleClient() {
   const logger = useLogger();
-  const node = useNode();
 
-  const [client, setClient] = useState(null);
-  const [creating, setCreating] = useState(false);
-  const [calling, setCalling] = useState(false);
+  const client = useClient(
+    "example_interfaces/srv/AddTwoInts",
+    "/add_two_ints"
+  );
 
   const randomInteger = () => {
     return Math.floor(Math.random() * 10);
@@ -21,24 +22,11 @@ function SimpleClient() {
   const [a, setA] = useState(randomInteger);
   const [b, setB] = useState(randomInteger);
   const [result, setResult] = useState("");
+  const [calling, setCalling] = useState(false);
 
-  useEffect(() => {
-    if (client === null && !creating) {
-      setCreating(true);
-      node
-        .createClient("example_interfaces/srv/AddTwoInts", "/add_two_ints")
-        .then((newClient) => {
-          setClient(newClient);
-        })
-        .catch((err) => {
-          logger.error(`Failed to create a new Client! ${err.message}`);
-          setClient(null);
-        })
-        .finally(() => {
-          setCreating(false);
-        });
-    }
-  });
+  if (client === null) {
+    return <BoxedCircularProgress />;
+  }
 
   const handleAChange = (ev) => {
     const newA = parseInt(ev.target.value, 10);

@@ -1,38 +1,22 @@
 import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
+import BoxedCircularProgress from "./BoxedCircularProgress";
 import { useLogger } from "./LoggerProvider";
-import { NodeProvider, useNode } from "./NodeProvider";
+import { NodeProvider, usePublisher } from "./NodeProvider";
 import TitledCard from "./TitledCard";
 
 function SimplePublisher() {
   const logger = useLogger();
-  const node = useNode();
-
-  const [publisher, setPublisher] = useState(null);
-  const [creating, setCreating] = useState(null);
-  const [publishing, setPublishing] = useState(false);
+  const publisher = usePublisher("std_msgs/msg/String", "/topic");
 
   const [data, setData] = useState("Hello World! 0");
+  const [publishing, setPublishing] = useState(false);
 
-  useEffect(() => {
-    if (publisher === null && !creating) {
-      setCreating(true);
-      node
-        .createPublisher("std_msgs/msg/String", "/topic")
-        .then((newPublisher) => {
-          setPublisher(newPublisher);
-        })
-        .catch((err) => {
-          logger.error(`Failed to create a new Publisher! ${err.message}`);
-          setPublisher(null);
-        })
-        .finally(() => {
-          setCreating(false);
-        });
-    }
-  });
+  if (publisher === null) {
+    return <BoxedCircularProgress />;
+  }
 
   const incrementData = () => {
     const strings = data.split(" ");

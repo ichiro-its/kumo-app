@@ -6,58 +6,41 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import { useLogger } from "./LoggerProvider";
-import { NodeProvider, useNode } from "./NodeProvider";
+import BoxedCircularProgress from "./BoxedCircularProgress";
+import { NodeProvider, useService } from "./NodeProvider";
 import TitledCard from "./TitledCard";
 
 function SimpleService() {
-  const logger = useLogger();
-  const node = useNode();
-
-  const [service, setService] = useState(null);
-  const [creating, setCreating] = useState(null);
   const [requests, setRequests] = useState([]);
 
-  useEffect(() => {
-    if (service === null && !creating) {
-      setCreating(true);
-      node
-        .createService(
-          "example_interfaces/srv/AddTwoInts",
-          "/add_two_ints",
-          (request) => {
-            const sum = request.a + request.b;
+  const service = useService(
+    "example_interfaces/srv/AddTwoInts",
+    "/add_two_ints",
+    (request) => {
+      const sum = request.a + request.b;
 
-            setRequests((prevRequests) => {
-              const newRequests = prevRequests.slice();
-              newRequests.unshift({
-                id: uuid(),
-                a: request.a,
-                b: request.b,
-                sum,
-              });
-
-              return newRequests;
-            });
-
-            return { sum };
-          }
-        )
-        .then((newService) => {
-          setService(newService);
-        })
-        .catch((err) => {
-          logger.error(`Failed to create a new Service! ${err.message}`);
-          setService(null);
-        })
-        .finally(() => {
-          setCreating(false);
+      setRequests((prevRequests) => {
+        const newRequests = prevRequests.slice();
+        newRequests.unshift({
+          id: uuid(),
+          a: request.a,
+          b: request.b,
+          sum,
         });
+
+        return newRequests;
+      });
+
+      return { sum };
     }
-  });
+  );
+
+  if (service === null) {
+    return <BoxedCircularProgress />;
+  }
 
   const RequestList = () => {
     if (requests.length <= 0) {

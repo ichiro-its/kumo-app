@@ -6,48 +6,35 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import { useLogger } from "./LoggerProvider";
-import { NodeProvider, useNode } from "./NodeProvider";
+import BoxedCircularProgress from "./BoxedCircularProgress";
+import { NodeProvider, useSubscription } from "./NodeProvider";
 import TitledCard from "./TitledCard";
 
 function SimpleSubscription() {
-  const logger = useLogger();
-  const node = useNode();
-
-  const [subscription, setSubscription] = useState(null);
-  const [creating, setCreating] = useState(null);
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    if (subscription === null && !creating) {
-      setCreating(true);
-      node
-        .createSubscription("std_msgs/msg/String", "/topic", (message) => {
-          setMessages((prevMessages) => {
-            const newMessages = prevMessages.slice();
-            newMessages.unshift({
-              id: uuid(),
-              data: message.data,
-            });
-
-            return newMessages;
-          });
-        })
-        .then((newSubscription) => {
-          setSubscription(newSubscription);
-        })
-        .catch((err) => {
-          logger.error(`Failed to create a new Subscription! ${err.message}`);
-          setSubscription(null);
-        })
-        .finally(() => {
-          setCreating(false);
+  const subscription = useSubscription(
+    "std_msgs/msg/String",
+    "/topic",
+    (message) => {
+      setMessages((prevMessages) => {
+        const newMessages = prevMessages.slice();
+        newMessages.unshift({
+          id: uuid(),
+          data: message.data,
         });
+
+        return newMessages;
+      });
     }
-  });
+  );
+
+  if (subscription === null) {
+    return <BoxedCircularProgress />;
+  }
 
   const MessageList = () => {
     if (messages.length <= 0) {

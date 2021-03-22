@@ -7,33 +7,94 @@ import { useSession } from "./SessionProvider";
 
 const NodeContext = createContext(null);
 
-const useNode = () => {
+function useStateOnce(callback) {
+  const [result, setResult] = useState(null);
+  const [processing, setProcessing] = useState(false);
+
+  useEffect(() => {
+    if (result === null && !processing) {
+      const callbackResult = callback();
+      if (callbackResult instanceof Promise) {
+        setProcessing(true);
+        callbackResult
+          .then((newResult) => {
+            setResult(newResult);
+          })
+          .finally(() => {
+            setProcessing(false);
+          });
+      } else {
+        setResult(callbackResult);
+      }
+    }
+  });
+
+  return result;
+}
+
+function useNode() {
   return useContext(NodeContext);
-};
+}
+
+function usePublisher(messageType, topicName) {
+  const node = useNode();
+  const logger = useLogger();
+
+  return useStateOnce(() => {
+    return node.createPublisher(messageType, topicName).catch((err) => {
+      logger.error(`Failed to create a new Publisher! ${err.message}`);
+    });
+  });
+}
+
+function useSubscription(messageType, topicName, callback) {
+  const node = useNode();
+  const logger = useLogger();
+
+  return useStateOnce(() => {
+    return node
+      .createSubscription(messageType, topicName, callback)
+      .catch((err) => {
+        logger.error(`Failed to create a new Subscription! ${err.message}`);
+      });
+  });
+}
+
+function useClient(serviceType, serviceName) {
+  const node = useNode();
+  const logger = useLogger();
+
+  return useStateOnce(() => {
+    return node.createClient(serviceType, serviceName).catch((err) => {
+      logger.error(`Failed to create a new Client! ${err.message}`);
+    });
+  });
+}
+
+function useService(serviceType, serviceName, callback) {
+  const node = useNode();
+  const logger = useLogger();
+
+  return useStateOnce(() => {
+    return node
+      .createService(serviceType, serviceName, callback)
+      .catch((err) => {
+        logger.error(`Failed to create a new Service! ${err.message}`);
+      });
+  });
+}
 
 function NodeProvider({ children, nodeName }) {
   const logger = useLogger();
   const session = useSession();
 
-  const [node, setNode] = useState(null);
-  const [creating, setCreating] = useState(false);
-
-  useEffect(() => {
-    if (node === null && !creating) {
-      setCreating(true);
-      setTimeout(() => {
-        session
-          .createNode(nodeName)
-          .then((newNode) => {
-            setNode(newNode);
-          })
-          .catch((err) => {
-            logger.error(`Failed to create ${nodeName}! ${err.messsage}`);
-          })
-          .finally(() => {
-            setCreating(false);
-          });
-      }, 500);
+  const node = useStateOnce(async () => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      return await session.createNode(nodeName);
+    } catch (err) {
+      logger.error(`Failed to create a Node! ${err.messsage}`);
+      throw err;
     }
   });
 
@@ -52,4 +113,11 @@ NodeProvider.propTypes = {
   nodeName: PropTypes.string.isRequired,
 };
 
-export { NodeProvider, useNode };
+export {
+  NodeProvider,
+  useClient,
+  useNode,
+  usePublisher,
+  useService,
+  useSubscription,
+};
