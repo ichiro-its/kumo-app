@@ -31,18 +31,16 @@ function SimplePublisherNode() {
     setData(strings.join(" "));
   };
 
-  const [publishing, handlePublish] = useHandleProcess(async () => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      if (publisher !== null) {
-        await publisher.publish({ data });
-
+  const [publishing, handlePublish] = useHandleProcess(() => {
+    return publisher
+      .publish({ data })
+      .then(() => {
         incrementData();
-      }
-    } catch (err) {
-      logger.error(`Failed to publish data! ${err.message}`);
-    }
-  });
+      })
+      .catch((err) => {
+        logger.error(`Failed to publish data! ${err.message}`);
+      });
+  }, 500);
 
   const handleDataChange = (ev) => {
     setData(ev.target.value);

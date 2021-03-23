@@ -24,20 +24,18 @@ function SimpleClientNode() {
   const [b, setB] = useState(randomInteger);
   const [result, setResult] = useState("");
 
-  const [calling, handleCall] = useHandleProcess(async () => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      if (client !== null) {
-        const response = await client.call({ a, b });
-
+  const [calling, handleCall] = useHandleProcess(() => {
+    return client
+      .call({ a, b })
+      .then((response) => {
         setA(randomInteger());
         setB(randomInteger());
         setResult(`${a} + ${b} = ${response.sum}`);
-      }
-    } catch (err) {
-      logger.error(`Failed to call data! ${err.message}`);
-    }
-  });
+      })
+      .catch((err) => {
+        logger.error(`Failed to call data! ${err.message}`);
+      });
+  }, 500);
 
   const handleAChange = (ev) => {
     const newA = parseInt(ev.target.value, 10);
