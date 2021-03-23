@@ -57,7 +57,8 @@ function SessionProvider({ children }) {
   });
 
   useEffect(() => {
-    if (bridge !== null && session === null && autoConnect) {
+    if (bridge !== null && session === null && autoConnect && !connecting) {
+      setConnecting(true);
       bridge.connect(webSocketUrl);
     }
   });
