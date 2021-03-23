@@ -17,7 +17,7 @@ function App() {
         <Box margin={4}>
           <Container maxWidth="md">
             <Grid container spacing={4}>
-              <Grid item sm={6} xs={12}>
+              <Grid item md={6} sm={12}>
                 <Grid container spacing={4}>
                   <Grid item xs={12}>
                     <SimplePublisherNode />
@@ -27,7 +27,7 @@ function App() {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item sm={6} xs={12}>
+              <Grid item md={6} sm={12}>
                 <Grid container spacing={4}>
                   <Grid item xs={12}>
                     <SimpleClientNode />
