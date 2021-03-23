@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/kumo-app/static/js/main.e253de5e.chunk.js",
-    "main.js.map": "/kumo-app/static/js/main.e253de5e.chunk.js.map",
+    "main.js": "/kumo-app/static/js/main.71d0d4b6.chunk.js",
+    "main.js.map": "/kumo-app/static/js/main.71d0d4b6.chunk.js.map",
     "runtime-main.js": "/kumo-app/static/js/runtime-main.9fcbdcc5.js",
     "runtime-main.js.map": "/kumo-app/static/js/runtime-main.9fcbdcc5.js.map",
-    "static/js/2.31cdf9dd.chunk.js": "/kumo-app/static/js/2.31cdf9dd.chunk.js",
-    "static/js/2.31cdf9dd.chunk.js.map": "/kumo-app/static/js/2.31cdf9dd.chunk.js.map",
+    "static/js/2.7459a32d.chunk.js": "/kumo-app/static/js/2.7459a32d.chunk.js",
+    "static/js/2.7459a32d.chunk.js.map": "/kumo-app/static/js/2.7459a32d.chunk.js.map",
     "index.html": "/kumo-app/index.html",
-    "static/js/2.31cdf9dd.chunk.js.LICENSE.txt": "/kumo-app/static/js/2.31cdf9dd.chunk.js.LICENSE.txt"
+    "static/js/2.7459a32d.chunk.js.LICENSE.txt": "/kumo-app/static/js/2.7459a32d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.9fcbdcc5.js",
-    "static/js/2.31cdf9dd.chunk.js",
-    "static/js/main.e253de5e.chunk.js"
+    "static/js/2.7459a32d.chunk.js",
+    "static/js/main.71d0d4b6.chunk.js"
   ]
 }
