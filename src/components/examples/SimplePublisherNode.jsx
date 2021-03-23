@@ -2,14 +2,20 @@ import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import React, { useState } from "react";
 
-import { useHandleProcess, useLogger, usePublisher } from "../../hooks";
+import {
+  useHandleProcess,
+  useLogger,
+  useNode,
+  usePublisher,
+} from "../../hooks";
+
 import BoxedCircularProgress from "../BoxedCircularProgress";
-import NodeProvider from "../NodeProvider";
 import TitledCard from "../TitledCard";
 
-function SimplePublisher() {
+function SimplePublisherNode() {
   const logger = useLogger();
-  const publisher = usePublisher("std_msgs/msg/String", "/topic");
+  const node = useNode("simple_publisher");
+  const publisher = usePublisher(node, "std_msgs/msg/String", "/topic");
 
   const [data, setData] = useState("Hello World! 0");
 
@@ -42,43 +48,41 @@ function SimplePublisher() {
     setData(ev.target.value);
   };
 
-  if (publisher === null) {
-    return <BoxedCircularProgress />;
-  }
+  const Content = () => {
+    if (publisher === null) {
+      return <BoxedCircularProgress />;
+    }
 
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <TextField
-          label="Data"
-          value={data}
-          onChange={handleDataChange}
-          disabled={publisher === null || publishing}
-          variant="outlined"
-          fullWidth
-        />
+    return (
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TextField
+            label="Data"
+            value={data}
+            onChange={handleDataChange}
+            disabled={publisher === null || publishing}
+            variant="outlined"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            onClick={handlePublish}
+            disabled={publisher === null || publishing}
+            color="primary"
+            variant="contained"
+            fullWidth
+          >
+            {publishing ? <CircularProgress size={24} /> : "Publish"}
+          </Button>
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Button
-          onClick={handlePublish}
-          disabled={publisher === null || publishing}
-          color="primary"
-          variant="contained"
-          fullWidth
-        >
-          {publishing ? <CircularProgress size={24} /> : "Publish"}
-        </Button>
-      </Grid>
-    </Grid>
-  );
-}
+    );
+  };
 
-function SimplePublisherNode() {
   return (
     <TitledCard title="Simple Publisher Node" raised>
-      <NodeProvider nodeName="simple_publisher">
-        <SimplePublisher />
-      </NodeProvider>
+      <Content />
     </TitledCard>
   );
 }

@@ -1,28 +1,27 @@
 import { useState, useEffect } from "react";
 
 function useStateOnce(callback) {
-  const [result, setResult] = useState(null);
-  const [processing, setProcessing] = useState(false);
+  const [state, setState] = useState(null);
+  const [once, setOnce] = useState(false);
 
   useEffect(() => {
-    if (result === null && !processing) {
-      const callbackResult = callback();
-      if (callbackResult instanceof Promise) {
-        setProcessing(true);
-        callbackResult
-          .then((newResult) => {
-            setResult(newResult);
-          })
-          .finally(() => {
-            setProcessing(false);
+    if (state === null && !once) {
+      const result = callback();
+
+      if (result !== null) {
+        setOnce(true);
+        if (result instanceof Promise) {
+          result.then((newResult) => {
+            setState(newResult);
           });
-      } else {
-        setResult(callbackResult);
+        } else {
+          setState(result);
+        }
       }
     }
   });
 
-  return result;
+  return state;
 }
 
 export default useStateOnce;

@@ -1,12 +1,14 @@
 import useLogger from "../useLogger";
-import { useNode } from "../useNode";
 import useStateOnce from "../useStateOnce";
 
-function useService(serviceType, serviceName, callback) {
-  const node = useNode();
+function useService(node, serviceType, serviceName, callback) {
   const logger = useLogger();
 
   return useStateOnce(() => {
+    if (node === null) {
+      return null;
+    }
+
     return node
       .createService(serviceType, serviceName, callback)
       .catch((err) => {

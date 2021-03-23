@@ -2,15 +2,16 @@ import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import React, { useState } from "react";
 
-import { useClient, useHandleProcess, useLogger } from "../../hooks";
+import { useNode, useClient, useHandleProcess, useLogger } from "../../hooks";
 import BoxedCircularProgress from "../BoxedCircularProgress";
-import NodeProvider from "../NodeProvider";
 import TitledCard from "../TitledCard";
 
-function SimpleClient() {
+function SimpleClientNode() {
   const logger = useLogger();
+  const node = useNode("simple_client");
 
   const client = useClient(
+    node,
     "example_interfaces/srv/AddTwoInts",
     "/add_two_ints"
   );
@@ -48,64 +49,62 @@ function SimpleClient() {
     setB(Number.isNaN(newB) ? b : newB);
   };
 
-  if (client === null) {
-    return <BoxedCircularProgress />;
-  }
+  const Content = () => {
+    if (client === null) {
+      return <BoxedCircularProgress />;
+    }
 
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={3}>
-        <TextField
-          label="A"
-          value={a}
-          onChange={handleAChange}
-          disabled={client === null || calling}
-          variant="outlined"
-          type="number"
-          fullWidth
-        />
+    return (
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <TextField
+            label="A"
+            value={a}
+            onChange={handleAChange}
+            disabled={client === null || calling}
+            variant="outlined"
+            type="number"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
+            label="B"
+            value={b}
+            onChange={handleBChange}
+            disabled={client === null || calling}
+            variant="outlined"
+            type="number"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            label="Result"
+            value={result}
+            variant="outlined"
+            fullWidth
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            onClick={handleCall}
+            disabled={client === null || calling}
+            color="primary"
+            variant="contained"
+            fullWidth
+          >
+            {calling ? <CircularProgress size={24} /> : "Call"}
+          </Button>
+        </Grid>
       </Grid>
-      <Grid item xs={3}>
-        <TextField
-          label="B"
-          value={b}
-          onChange={handleBChange}
-          disabled={client === null || calling}
-          variant="outlined"
-          type="number"
-          fullWidth
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          label="Result"
-          value={result}
-          variant="outlined"
-          fullWidth
-          disabled
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Button
-          onClick={handleCall}
-          disabled={client === null || calling}
-          color="primary"
-          variant="contained"
-          fullWidth
-        >
-          {calling ? <CircularProgress size={24} /> : "Call"}
-        </Button>
-      </Grid>
-    </Grid>
-  );
-}
+    );
+  };
 
-function SimpleClientNode() {
   return (
     <TitledCard title="Simple Client Node" raised>
-      <NodeProvider nodeName="simple_client">
-        <SimpleClient />
-      </NodeProvider>
+      <Content />
     </TitledCard>
   );
 }

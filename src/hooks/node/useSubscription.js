@@ -1,12 +1,14 @@
 import useLogger from "../useLogger";
-import { useNode } from "../useNode";
 import useStateOnce from "../useStateOnce";
 
-function useSubscription(messageType, topicName, callback) {
-  const node = useNode();
+function useSubscription(node, messageType, topicName, callback) {
   const logger = useLogger();
 
   return useStateOnce(() => {
+    if (node === null) {
+      return null;
+    }
+
     return node
       .createSubscription(messageType, topicName, callback)
       .catch((err) => {

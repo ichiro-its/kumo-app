@@ -9,15 +9,17 @@ import {
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import { useService } from "../../hooks";
+import { useNode, useService } from "../../hooks";
 import BoxedCircularProgress from "../BoxedCircularProgress";
-import NodeProvider from "../NodeProvider";
 import TitledCard from "../TitledCard";
 
-function SimpleService() {
+function SimpleServiceNode() {
+  const node = useNode("simple_service");
+
   const [requests, setRequests] = useState([]);
 
   const service = useService(
+    node,
     "example_interfaces/srv/AddTwoInts",
     "/add_two_ints",
     (request) => {
@@ -39,50 +41,48 @@ function SimpleService() {
     }
   );
 
-  if (service === null) {
-    return <BoxedCircularProgress />;
-  }
-
-  const RequestList = () => {
-    if (requests.length <= 0) {
-      return (
-        <Box
-          display="flex"
-          height="100%"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Typography>No data</Typography>
-        </Box>
-      );
+  const Content = () => {
+    if (service === null) {
+      return <BoxedCircularProgress />;
     }
 
-    const requestItems = requests.map((request) => {
-      return (
-        <ListItem key={request.id} button divider>
-          <ListItemText
-            primary={`${request.a} + ${request.b} = ${request.sum}`}
-          />
-        </ListItem>
-      );
-    });
+    const RequestList = () => {
+      if (requests.length <= 0) {
+        return (
+          <Box
+            display="flex"
+            height="100%"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Typography>No data</Typography>
+          </Box>
+        );
+      }
 
-    return <List disablePadding>{requestItems}</List>;
+      const requestItems = requests.map((request) => {
+        return (
+          <ListItem key={request.id} button divider>
+            <ListItemText
+              primary={`${request.a} + ${request.b} = ${request.sum}`}
+            />
+          </ListItem>
+        );
+      });
+
+      return <List disablePadding>{requestItems}</List>;
+    };
+
+    return (
+      <Box height={200} overflow="auto">
+        <RequestList />
+      </Box>
+    );
   };
 
   return (
-    <Box height={200} overflow="auto">
-      <RequestList />
-    </Box>
-  );
-}
-
-function SimpleServiceNode() {
-  return (
     <TitledCard title="Simple Service Node" raised disablePadding>
-      <NodeProvider nodeName="simple_service">
-        <SimpleService />
-      </NodeProvider>
+      <Content />
     </TitledCard>
   );
 }

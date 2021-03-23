@@ -1,12 +1,14 @@
 import useLogger from "../useLogger";
-import { useNode } from "../useNode";
 import useStateOnce from "../useStateOnce";
 
-function usePublisher(messageType, topicName) {
-  const node = useNode();
+function usePublisher(node, messageType, topicName) {
   const logger = useLogger();
 
   return useStateOnce(() => {
+    if (node === null) {
+      return null;
+    }
+
     return node.createPublisher(messageType, topicName).catch((err) => {
       logger.error(`Failed to create a new Publisher! ${err.message}`);
     });
