@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@material-ui/core";
 
-import { Session as Bridge } from "kumo-client";
+import { Bridge } from "kumo-client";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 

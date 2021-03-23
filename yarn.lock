@@ -6993,10 +6993,10 @@ klona@^2.0.4:
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.4.tgz#7bb1e3affb0cb8624547ef7e8f6708ea2e39dfc0"
   integrity sha512-ZRbnvdg/NxqzC7L9Uyqzf4psi1OM4Cuc+sJAkQPjO6XkQIJTNbfK2Rsmbw8fx1p2mkZdp2FZYo2+LwXYY/uwIA==
 
-kumo-client@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/kumo-client/-/kumo-client-0.2.0.tgz#18c78659048aa2e8a8d71093568bae578ff1e812"
-  integrity sha512-yQpPB+3V5R75UDixdpNnuO9+nKPwYhxydocKdUjGSlSTIEy2x0vFe9Ac7qz5IrD/1BOk/IqqHYdTSlJ+WePEFg==
+kumo-client@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/kumo-client/-/kumo-client-0.2.1.tgz#6af612d4bff00314bb5935ec916366b442cd796c"
+  integrity sha512-aJFVsa/AQozNhPg+yrqMTWmaQdSClG70X7mUxcgcdlu2brmhJadAXvtF5vftVbLsa8cO7aWT2i1Naqfs2HSe2g==
   dependencies:
     websocket "^1.0.33"
 
