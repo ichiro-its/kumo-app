@@ -38,18 +38,20 @@ const urlsToCache = [
   "/src/index.jsx",
 ];
 
-/* eslint-disable-next-line no-restricted-globals */
+/* eslint-disable-next-line no-restricted-globals func-names */
 self.addEventListener("install", function (event) {
   event.waitUntil(
+    /* eslint-disable-next-line func-names */
     caches.open(CACHE_NAME).then(function (cache) {
       return cache.addAll(urlsToCache);
     })
   );
 });
 
-/* eslint-disable-next-line no-restricted-globals */
+/* eslint-disable-next-line no-restricted-globals func-names */
 self.addEventListener("fetch", function (event) {
   event.respondWith(
+    /* eslint-disable-next-line func-names */
     caches.match(event.request).then(function (response) {
       if (response) {
         return response;
