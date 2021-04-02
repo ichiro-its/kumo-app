@@ -1,5 +1,5 @@
-/* eslint func-names: ["error", "never"]*/
 /*eslint spaced-comment: ["error", "never"]*/
+/*eslint func-names: ["error", "never"]*/
 
 const CACHE_NAME = "kumo-app";
 const urlsToCache = [
