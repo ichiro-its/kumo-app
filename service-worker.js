@@ -35,20 +35,22 @@ const urlsToCache = [
   "/src/hooks/UseStateOnce.js",
   "/src/hooks/UseStoreState.js",
   "/src/App.jsx",
-  "/src/index.jsx"
+  "/src/index.jsx",
 ];
 
-self.addEventListener("install", function(event) {
+/* eslint-disable-next-line no-restricted-globals */
+self.addEventListener("install", function (event) {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
+    caches.open(CACHE_NAME).then(function (cache) {
       return cache.addAll(urlsToCache);
     })
   );
 });
 
-self.addEventListener("fetch", function(event) {
+/* eslint-disable-next-line no-restricted-globals */
+self.addEventListener("fetch", function (event) {
   event.respondWith(
-    caches.match(event.request).then(function(response) {
+    caches.match(event.request).then(function (response) {
       if (response) {
         return response;
       }
