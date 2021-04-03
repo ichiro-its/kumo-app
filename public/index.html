@@ -13,9 +13,9 @@
     <!-- Meta End -->
 
     <!-- Link Start -->
-    <link rel="manifest" href="manifest.json"->
+    <link rel="manifest" href="./manifest.json"->
     <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href=".images/favicon.ico" type="image/x-icon">
     <!-- Link End -->
     
     <!-- Style Start -->
@@ -37,9 +37,7 @@
   <!-- Script Start -->
   <script>
     if (navigator.serviceWorker) {
-      navigator.serviceWorker.register("/kumo-app/service-worker.js", {
-        scope: "/kumo-app/",
-      });
+      navigator.serviceWorker.register("./service-worker.js");
     }
   </script>
   <!-- Script End -->

@@ -5,13 +5,12 @@ const APP_PREFIX = "kumo_app";
 const VERSION = "version_01";
 const CACHE_NAME = APP_PREFIX + VERSION;
 const URLS = [
-  "/kumo-app/",
-  "/kumo-app/index.html",
-  "/kumo-app/manifest.json",
-  "/kumo-app/txt/robots.txt",
-  "/kumo-app/images/favicon.ico",
-  "/kumo-app/images/logo192.png",
-  "/kumo-app/images/logo512.png",
+  "manifest.json",
+  "index.html",
+  "txt/robots.txt",
+  "images/favicon.ico",
+  "images/logo192.png",
+  "images/logo512.png",
 ];
 
 /*eslint-disable-next-line no-restricted-globals */
