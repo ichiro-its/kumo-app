@@ -15,44 +15,22 @@ const URLS = [
 ];
 
 /*eslint-disable-next-line no-restricted-globals */
-self.addEventListener("fetch", function (e) {
-  e.respondWith(
-    caches.match(e.request).then(function (request) {
-      if (request) {
-        return request;
-      } else {
-        return fetch(e.request);
-      }
-    })
-  );
-});
-
-/*eslint-disable-next-line no-restricted-globals */
-self.addEventListener("install", function (e) {
-  e.waitUntil(
+self.addEventListener("install", function (event) {
+  event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(URLS);
+      return cache.addAll(urlsToCache);
     })
   );
 });
 
 /*eslint-disable-next-line no-restricted-globals */
-self.addEventListener("activate", function (e) {
-  e.waitUntil(
-    caches.keys().then(function (keyList) {
-      const cacheWhitelist = keyList.filter(function (key) {
-        return key.indexOf(APP_PREFIX);
-      });
-
-      cacheWhitelist.push(CACHE_NAME);
-
-      return Promise.all(
-        keyList.map(function (key, i) {
-          if (cacheWhitelist.indexOf(key) === -1) {
-            return caches.delete(keyList[i]);
-          }
-        })
-      );
+self.addEventListener("fetch", function (event) {
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      if (response) {
+        return response;
+      }
+      return fetch(event.request);
     })
   );
 });
