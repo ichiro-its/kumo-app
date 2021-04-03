@@ -11,7 +11,9 @@ var URLS = [
   "/kumo-app/images/logo512.png",
 ];
 
-return request || fetch(e.request);
+self.addEventListener("fetch", function (e) {
+  return request || fetch(e.request);
+});
 
 self.addEventListener("install", function (e) {
   e.waitUntil(
