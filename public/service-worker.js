@@ -1,63 +1,44 @@
-/*eslint spaced-comment: ["error", "never"]*/
-/*eslint func-names: ["error", "never"]*/
-
-const CACHE_NAME = "kumo-app";
-const urlsToCache = [
-  "/",
-  "/../LICENSE",
-  "/manifest.json",
-  "/../package.json",
-  "/../README.md",
-  "/../yarn.lock",
-  "/images/favicon.ico",
-  "/images/logo192.png",
-  "/images/logo512.png",
-  "/js/script.js",
-  "/txt/robots.txt",
-  "/index.html",
-  "/../src/components/examples/index.js",
-  "/../src/components/examples/SimpleClientNode.jsx",
-  "/../src/components/examples/SimplePublisherNode.jsx",
-  "/../src/components/examples/SimpleServiceNode.jsx",
-  "/../src/components/examples/SimpleSubscriptionNode.jsx",
-  "/../src/components/BoxedCircularProgress.jsx",
-  "/../src/components/index.js",
-  "/../src/components/LoggerProvider.jsx",
-  "/../src/components/SessionProvider.jsx",
-  "/../src/components/TitledCard.jsx",
-  "/../src/hooks/node/index.js",
-  "/../src/hooks/node/useClient.js",
-  "/../src/hooks/node/useNode.js",
-  "/../src/hooks/node/usePublisher.js",
-  "/../src/hooks/node/useService.js",
-  "/../src/hooks/node/useSubscription.js",
-  "/../src/hooks/index.js",
-  "/../src/hooks/UseHandleProcess.js",
-  "/../src/hooks/UseLogger.js",
-  "/../src/hooks/UseSession.js",
-  "/../src/hooks/UseStateOnce.js",
-  "/../src/hooks/UseStoreState.js",
-  "/../src/App.jsx",
-  "/../src/index.jsx",
+var APP_PREFIX = "kumo_app";
+var VERSION = "version_01";
+var CACHE_NAME = APP_PREFIX + VERSION;
+var URLS = [
+  "/kumo-app/",
+  "/kumo-app/index.html",
+  "/kumo-app/manifest.json",
+  "/kumo-app/txt/robots.txt",
+  "/kumo-app/images/favicon.ico",
+  "/kumo-app/images/logo192.png",
+  "/kumo-app/images/logo512.png",
 ];
 
-/*eslint-disable-next-line no-restricted-globals */
-self.addEventListener("install", function (event) {
-  event.waitUntil(
+return request || fetch(e.request);
+
+self.addEventListener("install", function (e) {
+  e.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(urlsToCache);
+      console.log("installing cache : " + CACHE_NAME);
+      return cache.addAll(URLS);
     })
   );
 });
 
-/*eslint-disable-next-line no-restricted-globals */
-self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    caches.match(event.request).then(function (response) {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request);
+self.addEventListener("activate", function (e) {
+  e.waitUntil(
+    caches.keys().then(function (keyList) {
+      var cacheWhitelist = keyList.filter(function (key) {
+        return key.indexOf(APP_PREFIX);
+      });
+
+      cacheWhitelist.push(CACHE_NAME);
+
+      return Promise.all(
+        keyList.map(function (key, i) {
+          if (cacheWhitelist.indexOf(key) === -1) {
+            console.log("deleting cache : " + keyList[i]);
+            return caches.delete(keyList[i]);
+          }
+        })
+      );
     })
   );
 });
