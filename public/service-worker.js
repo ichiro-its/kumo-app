@@ -1,7 +1,10 @@
-var APP_PREFIX = "kumo_app";
-var VERSION = "version_01";
-var CACHE_NAME = APP_PREFIX + VERSION;
-var URLS = [
+/*eslint spaced-comment: ["error", "never"]*/
+/*eslint func-names: ["error", "never"]*/
+
+const APP_PREFIX = "kumo_app";
+const VERSION = "version_01";
+const CACHE_NAME = APP_PREFIX + VERSION;
+const URLS = [
   "/kumo-app/",
   "/kumo-app/index.html",
   "/kumo-app/manifest.json",
@@ -11,23 +14,33 @@ var URLS = [
   "/kumo-app/images/logo512.png",
 ];
 
+/*eslint-disable-next-line no-restricted-globals */
 self.addEventListener("fetch", function (e) {
-  return request || fetch(e.request);
+  e.respondWith(
+    caches.match(e.request).then(function (request) {
+      if (request) {
+        return request;
+      } else {
+        return fetch(e.request);
+      }
+    })
+  );
 });
 
+/*eslint-disable-next-line no-restricted-globals */
 self.addEventListener("install", function (e) {
   e.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      console.log("installing cache : " + CACHE_NAME);
       return cache.addAll(URLS);
     })
   );
 });
 
+/*eslint-disable-next-line no-restricted-globals */
 self.addEventListener("activate", function (e) {
   e.waitUntil(
     caches.keys().then(function (keyList) {
-      var cacheWhitelist = keyList.filter(function (key) {
+      const cacheWhitelist = keyList.filter(function (key) {
         return key.indexOf(APP_PREFIX);
       });
 
@@ -36,7 +49,6 @@ self.addEventListener("activate", function (e) {
       return Promise.all(
         keyList.map(function (key, i) {
           if (cacheWhitelist.indexOf(key) === -1) {
-            console.log("deleting cache : " + keyList[i]);
             return caches.delete(keyList[i]);
           }
         })
