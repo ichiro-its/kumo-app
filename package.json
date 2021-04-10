@@ -1,7 +1,7 @@
 {
   "name": "kumo-app",
   "version": "0.1.0",
-  "description": "React wrapper for Kumo client library",
+  "description": "React component wrapper for Kumo client library",
   "keywords": [
     "javascript",
     "kumo",

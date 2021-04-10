@@ -1,7 +1,7 @@
 {
-    "name": "Kumo App - React Wrapper for Kumo CLient Library",
-    "short_name": "Kumo App",
-    "description": "Kumo App is a React Wrapper made for Kumo Client Library by Ichiro Robotics Team from ITS Indonesia",
+    "name": "Kumo App Example",
+    "short_name": "Kumo App Example",
+    "description": "Example of Kumo App React component library",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#000000",
