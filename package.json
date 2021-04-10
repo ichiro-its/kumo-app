@@ -1,7 +1,6 @@
 {
   "name": "kumo-app",
   "version": "0.1.0",
-  "homepage": "https://ichiro-its.github.io/kumo-app/",
   "description": "React wrapper for Kumo client library",
   "keywords": [
     "javascript",
@@ -15,11 +14,17 @@
     "websocket"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "source": "src/index.js",
+  "engines": {
+    "node": ">=10"
+  },
   "repository": "git@github.com:ichiro-its/kumo-app.git",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "prepare": "run-s build",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore ."
   },
   "dependencies": {
@@ -30,9 +35,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.3",
-    "store2": "^2.12.0",
-    "typescript": "^4.2.3",
-    "uuid": "^8.3.2"
+    "store2": "^2.12.0"
   },
   "devDependencies": {
     "eslint": "^7.22.0",
@@ -43,18 +46,8 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "microbundle-crl": "^0.13.11",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }
