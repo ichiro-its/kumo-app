@@ -7,12 +7,15 @@
     "build": "node ../node_modules/react-scripts/bin/react-scripts.js build"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "kumo-app": "link:..",
-    "react": "link:../node_modules/react",
-    "react-dom": "link:../node_modules/react-dom",
-    "react-scripts": "link:../node_modules/react-scripts",
+    "@material-ui/core": "file:../node_modules/@material-ui/core",
+    "kumo-app": "file:..",
+    "react": "file:../node_modules/react",
+    "react-dom": "file:../node_modules/react-dom",
+    "react-scripts": "file:../node_modules/react-scripts",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
   },
   "private": true,
   "browserslist": [
