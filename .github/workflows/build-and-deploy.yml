@@ -13,8 +13,8 @@ jobs:
           npm install
           npm run build
       - name: Installing and building example
-        run: /
-          cd example
+        working-directory: ./example
+        run: |
           npm run install
           npm run build
       - name: Deploying
