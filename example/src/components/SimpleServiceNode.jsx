@@ -6,12 +6,15 @@ import {
   Typography,
 } from "@material-ui/core";
 
+import {
+  BoxedCircularProgress,
+  TitledCard,
+  useNode,
+  useService,
+} from "kumo-app";
+
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
-
-import { useNode, useService } from "../../hooks";
-import BoxedCircularProgress from "../BoxedCircularProgress";
-import TitledCard from "../TitledCard";
 
 function SimpleServiceNode() {
   const node = useNode("simple_service");

@@ -1,10 +1,15 @@
 import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
-import React, { useState } from "react";
+import {
+  BoxedCircularProgress,
+  TitledCard,
+  useNode,
+  useClient,
+  useHandleProcess,
+  useLogger,
+} from "kumo-app";
 
-import { useNode, useClient, useHandleProcess, useLogger } from "../../hooks";
-import BoxedCircularProgress from "../BoxedCircularProgress";
-import TitledCard from "../TitledCard";
+import React, { useState } from "react";
 
 function SimpleClientNode() {
   const logger = useLogger();

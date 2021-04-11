@@ -1,0 +1,27 @@
+{
+  "name": "kumo-app-example",
+  "version": "0.1.0",
+  "homepage": "/kumo-app",
+  "scripts": {
+    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
+    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build"
+  },
+  "dependencies": {
+    "@material-ui/core": "file:../node_modules/@material-ui/core",
+    "kumo-app": "file:..",
+    "react": "file:../node_modules/react",
+    "react-dom": "file:../node_modules/react-dom",
+    "react-scripts": "file:../node_modules/react-scripts",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
+  },
+  "private": true,
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

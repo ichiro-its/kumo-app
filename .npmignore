@@ -1,0 +1,7 @@
+.*
+
+example
+src
+
+package-lock.json
+yarn.lock

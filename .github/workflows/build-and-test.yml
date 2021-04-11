@@ -1,9 +1,11 @@
-name: Build and Deploy
+name: Build and Test
 on:
+  pull_request:
+    branches: [ master ]
   push:
     branches: [ master ]
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checking Out
@@ -17,8 +19,6 @@ jobs:
         run: |
           npm install
           npm run build
-      - name: Deploying
-        uses: JamesIves/github-pages-deploy-action@4.1.0
-        with:
-          branch: gh-pages
-          folder: example/build
+      - name: Testing library
+        run: |
+          npm run lint

@@ -1,6 +1,6 @@
 # Kumo App
 
-[React](https://reactjs.org/) wrapper for [Kumo client library](https://www.npmjs.com/package/kumo-client).
+[React](https://reactjs.org/) component wrapper for [Kumo client library](https://www.npmjs.com/package/kumo-client).
 
 ## License
 
