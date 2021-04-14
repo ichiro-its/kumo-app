@@ -43,8 +43,8 @@ function SessionProvider({ children }) {
       })
       .onDisconnect((code, reason) => {
         logger.error(
-          "Disconnected from the bridge server!" +
-            ` ${reason || "no reason"} (${code})`
+          "Disconnected from the bridge server! " +
+            `${reason || "no reason"} (${code}).`
         );
 
         setSession(null);
@@ -52,7 +52,7 @@ function SessionProvider({ children }) {
         setAutoConnect(false);
       })
       .onError((err) => {
-        logger.error(`Found error! ${err.message}`);
+        logger.error(`Found error! ${err.message}.`);
       });
   });
 
@@ -96,7 +96,7 @@ function SessionProvider({ children }) {
                   onChange={onWebSocketUrlChange}
                   error={!validateWebSocketUrl()}
                   helperText={
-                    validateWebSocketUrl() ? null : "Invalid WebSocket URL"
+                    validateWebSocketUrl() ? null : "Invalid WebSocket URL!"
                   }
                   disabled={connecting}
                   variant="outlined"

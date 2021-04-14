@@ -10,7 +10,7 @@ function usePublisher(node, messageType, topicName) {
     }
 
     return node.createPublisher(messageType, topicName).catch((err) => {
-      logger.error(`Failed to create a new Publisher! ${err.message}`);
+      logger.error(`Failed to create a new Publisher! ${err.message}.`);
     });
   });
 }

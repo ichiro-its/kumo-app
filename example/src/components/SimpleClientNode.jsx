@@ -38,7 +38,7 @@ function SimpleClientNode() {
         setResult(`${a} + ${b} = ${response.sum}`);
       })
       .catch((err) => {
-        logger.error(`Failed to call data! ${err.message}`);
+        logger.error(`Failed to call data! ${err.message}.`);
       });
   }, 500);
 

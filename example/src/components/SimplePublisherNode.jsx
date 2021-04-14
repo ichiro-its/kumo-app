@@ -37,7 +37,7 @@ function SimplePublisherNode() {
         incrementData();
       })
       .catch((err) => {
-        logger.error(`Failed to publish data! ${err.message}`);
+        logger.error(`Failed to publish data! ${err.message}.`);
       });
   }, 500);
 

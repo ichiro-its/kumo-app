@@ -12,7 +12,7 @@ function useService(node, serviceType, serviceName, callback) {
     return node
       .createService(serviceType, serviceName, callback)
       .catch((err) => {
-        logger.error(`Failed to create a new Service! ${err.message}`);
+        logger.error(`Failed to create a new Service! ${err.message}.`);
       });
   });
 }
