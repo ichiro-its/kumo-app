@@ -25,7 +25,8 @@
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "prepare": "run-s build",
-    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore ."
+    "test": "run-s test-lint",
+    "test-lint": "eslint --ext .js,.jsx --ignore-path .gitignore ."
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
