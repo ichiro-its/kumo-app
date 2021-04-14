@@ -1,7 +1,5 @@
 import { Box, Container, Grid } from "@material-ui/core";
-
 import { LoggerProvider, SessionProvider } from "kumo-app";
-
 import React from "react";
 
 import {
