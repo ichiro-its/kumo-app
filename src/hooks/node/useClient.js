@@ -10,7 +10,7 @@ function useClient(node, serviceType, serviceName) {
     }
 
     return node.createClient(serviceType, serviceName).catch((err) => {
-      logger.error(`Failed to create a new Client! ${err.message}`);
+      logger.error(`Failed to create a new Client! ${err.message}.`);
     });
   });
 }

@@ -12,7 +12,7 @@ function useSubscription(node, messageType, topicName, callback) {
     return node
       .createSubscription(messageType, topicName, callback)
       .catch((err) => {
-        logger.error(`Failed to create a new Subscription! ${err.message}`);
+        logger.error(`Failed to create a new Subscription! ${err.message}.`);
       });
   });
 }

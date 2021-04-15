@@ -12,7 +12,7 @@ const useNode = (nodeName) => {
     }
 
     return session.createNode(nodeName).catch((err) => {
-      logger.error(`Failed to create a Node! ${err.messsage}`);
+      logger.error(`Failed to create a Node! ${err.messsage}.`);
     });
   });
 };
