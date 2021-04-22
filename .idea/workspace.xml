@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f3bf0bcf-bdab-4fce-880a-5bce159a7044" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/BoxedCircularProgress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BoxedCircularProgress.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoggerProvider.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoggerProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SessionProvider.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SessionProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TitledCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TitledCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/useClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/useNode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useNode.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/usePublisher.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/usePublisher.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/useService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/useSubscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useSubscription.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useHandleProcess.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useHandleProcess.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useLogger.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useLogger.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useSession.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useSession.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useStateOnce.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useStateOnce.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useStoreState.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useStoreState.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1rVTli2ZlY8vY4pzu7wNk8EpPFC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../example" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f3bf0bcf-bdab-4fce-880a-5bce159a7044" name="Default Changelist" comment="" />
+      <created>1619060410925</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1619060410925</updated>
+      <workItem from="1619060415076" duration="8916000" />
+      <workItem from="1619082727346" duration="16482000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

@@ -7,9 +7,8 @@ import {
   TextField,
 } from "@material-ui/core";
 
-import { Bridge } from "kumo-client";
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import { Bridge, SessionHandler } from "kumo-client";
+import React, { ReactNode, ReactNodeArray, useEffect, useState } from "react";
 
 import TitledCard from "./TitledCard";
 import {
@@ -19,10 +18,15 @@ import {
   useStoreState,
 } from "../hooks";
 
-function SessionProvider({ children }) {
+interface Props {
+  children: ReactNode | ReactNodeArray;
+}
+
+const SessionProvider = (props: Props) => {
+  const { children } = props;
   const logger = useLogger();
 
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState<SessionHandler | null>(null);
   const [connecting, setConnecting] = useState(false);
 
   const [webSocketUrl, setWebSocketUrl] = useStoreState(
@@ -74,7 +78,7 @@ function SessionProvider({ children }) {
     return webSocketUrl.startsWith("ws://") && webSocketUrl.length > 5;
   };
 
-  const onWebSocketUrlChange = (event) => {
+  const onWebSocketUrlChange = (event: any) => {
     setWebSocketUrl(event.target.value);
     setAutoConnect(false);
   };
@@ -126,13 +130,6 @@ function SessionProvider({ children }) {
       {children}
     </SessionContext.Provider>
   );
-}
-
-SessionProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
 };
 
 export default SessionProvider;

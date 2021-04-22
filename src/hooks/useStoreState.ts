@@ -1,16 +1,19 @@
 import { useState } from "react";
 import Store from "store2";
 
-function useStoreState(key, initialValue) {
+const useStoreState: (key: any, initialValue: any) => any = (
+  key,
+  initialValue
+) => {
   const [state, setState] = useState(Store.get(key, initialValue));
 
   return [
     state,
-    (newState) => {
+    (newState: any) => {
       setState(newState);
       Store.set(key, newState);
     },
   ];
-}
+};
 
 export default useStoreState;

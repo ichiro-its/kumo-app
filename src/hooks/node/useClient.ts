@@ -1,7 +1,11 @@
 import useLogger from "../useLogger";
 import useStateOnce from "../useStateOnce";
 
-function useClient(node, serviceType, serviceName) {
+const useClient: (
+  node: any | undefined,
+  serviceType: string,
+  serviceName: string
+) => any = (node, serviceType, serviceName) => {
   const logger = useLogger();
 
   return useStateOnce(() => {
@@ -9,10 +13,10 @@ function useClient(node, serviceType, serviceName) {
       return null;
     }
 
-    return node.createClient(serviceType, serviceName).catch((err) => {
+    return node.createClient(serviceType, serviceName).catch((err: any) => {
       logger.error(`Failed to create a new Client! ${err.message}.`);
     });
   });
-}
+};
 
 export default useClient;

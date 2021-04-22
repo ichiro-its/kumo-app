@@ -1,7 +1,12 @@
 import useLogger from "../useLogger";
 import useStateOnce from "../useStateOnce";
 
-function useService(node, serviceType, serviceName, callback) {
+const useService: (
+  node: any,
+  serviceType: string,
+  serviceName: string,
+  callback: () => void
+) => any = (node, serviceType, serviceName, callback) => {
   const logger = useLogger();
 
   return useStateOnce(() => {
@@ -11,10 +16,10 @@ function useService(node, serviceType, serviceName, callback) {
 
     return node
       .createService(serviceType, serviceName, callback)
-      .catch((err) => {
+      .catch((err: any) => {
         logger.error(`Failed to create a new Service! ${err.message}.`);
       });
   });
-}
+};
 
 export default useService;

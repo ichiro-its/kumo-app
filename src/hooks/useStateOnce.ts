@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-function useStateOnce(callback) {
-  const [state, setState] = useState(null);
-  const [once, setOnce] = useState(false);
+const useStateOnce: (callback: any | undefined) => any = (callback) => {
+  const [state, setState] = useState<any>(null);
+  const [once, setOnce] = useState<boolean>(false);
 
   useEffect(() => {
     if (state === null && !once) {
@@ -22,6 +22,6 @@ function useStateOnce(callback) {
   });
 
   return state;
-}
+};
 
 export default useStateOnce;

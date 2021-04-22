@@ -26,14 +26,19 @@
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "run-s test-lint",
-    "test-lint": "eslint --ext .js,.jsx --ignore-path .gitignore ."
+    "test-lint": "eslint --ext .ts,.tsx --ignore-path .gitignore ."
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.41",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "kumo-client": "^0.2.1",
     "notistack": "^1.0.5",
     "prop-types": "^15.7.2",
-    "store2": "^2.12.0"
+    "store2": "^2.12.0",
+    "typescript": "^4.2.4"
   },
   "devDependencies": {
     "eslint": "^7.22.0",

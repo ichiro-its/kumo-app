@@ -1,25 +1,40 @@
 {
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
-  "extends": [
-    "airbnb",
-    "eslint:recommended",
-    "plugin:prettier/recommended",
-    "plugin:react/recommended"
-  ],
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
     "ecmaVersion": 12,
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "legacyDecorators": true,
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "16"
+    }
+  },
+  "rules": {
+    "space-before-function-paren": 0,
+    "react/prop-types": 0,
+    "react/jsx-handler-names": 0,
+    "react/jsx-fragments": 0,
+    "react/no-unused-prop-types": 0,
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   },
   "plugins": [
-    "prettier",
-    "react"
-  ],
-  "rules": {
-  }
+    "@typescript-eslint",
+    "prettier"
+  ]
 }

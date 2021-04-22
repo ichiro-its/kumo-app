@@ -1,7 +1,10 @@
 import { useState } from "react";
 
-function useHandleProcess(process, delay) {
-  const [processing, setProcessing] = useState(false);
+const useHandleProcess: (
+  process: any | undefined,
+  delay: number
+) => [boolean, () => void] = (process, delay) => {
+  const [processing, setProcessing] = useState<boolean>(false);
 
   const handleProcess = () => {
     if (delay === undefined) {
@@ -22,6 +25,6 @@ function useHandleProcess(process, delay) {
   };
 
   return [processing, handleProcess];
-}
+};
 
 export default useHandleProcess;
