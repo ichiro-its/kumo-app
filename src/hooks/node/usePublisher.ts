@@ -13,7 +13,7 @@ const usePublisher: (
       return null;
     }
 
-    return node.createPublisher(messageType, topicName).catch((err: any) => {
+    return node.createPublisher(messageType, topicName).catch((err: Error) => {
       logger.error(`Failed to create a new Publisher! ${err.message}.`);
     });
   });

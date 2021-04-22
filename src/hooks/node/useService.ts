@@ -16,7 +16,7 @@ const useService: (
 
     return node
       .createService(serviceType, serviceName, callback)
-      .catch((err: any) => {
+      .catch((err: Error) => {
         logger.error(`Failed to create a new Service! ${err.message}.`);
       });
   });

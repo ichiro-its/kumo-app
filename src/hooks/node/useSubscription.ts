@@ -16,7 +16,7 @@ const useSubscription: (
 
     return node
       .createSubscription(messageType, topicName, callback)
-      .catch((err: any) => {
+      .catch((err: Error) => {
         logger.error(`Failed to create a new Subscription! ${err.message}.`);
       });
   });

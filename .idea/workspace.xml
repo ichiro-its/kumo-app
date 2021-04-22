@@ -2,28 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3bf0bcf-bdab-4fce-880a-5bce159a7044" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/BoxedCircularProgress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BoxedCircularProgress.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LoggerProvider.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoggerProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SessionProvider.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SessionProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TitledCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TitledCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/useClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useClient.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/useNode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useNode.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/usePublisher.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/usePublisher.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/useService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/useSubscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useSubscription.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useHandleProcess.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useHandleProcess.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useLogger.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useLogger.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useSession.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useSession.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useStateOnce.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useStateOnce.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useStoreState.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useStoreState.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/useClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/useNode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useNode.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/usePublisher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/usePublisher.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/useService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/node/useSubscription.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useSubscription.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +48,7 @@
       <option name="presentableId" value="Default" />
       <updated>1619060410925</updated>
       <workItem from="1619060415076" duration="8916000" />
-      <workItem from="1619082727346" duration="16482000" />
+      <workItem from="1619082727346" duration="17611000" />
     </task>
     <servers />
   </component>

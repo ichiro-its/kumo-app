@@ -11,8 +11,8 @@ const useNode: (nodeName: string) => any = (nodeName) => {
       return null;
     }
 
-    return session.createNode(nodeName).catch((err: any) => {
-      logger.error(`Failed to create a Node! ${err.messsage}.`);
+    return session.createNode(nodeName).catch((err: Error) => {
+      logger.error(`Failed to create a Node! ${err.message}.`);
     });
   });
 };

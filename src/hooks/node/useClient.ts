@@ -13,7 +13,7 @@ const useClient: (
       return null;
     }
 
-    return node.createClient(serviceType, serviceName).catch((err: any) => {
+    return node.createClient(serviceType, serviceName).catch((err: Error) => {
       logger.error(`Failed to create a new Client! ${err.message}.`);
     });
   });
