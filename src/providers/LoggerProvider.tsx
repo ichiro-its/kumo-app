@@ -1,4 +1,15 @@
-import { useSnackbar } from "notistack";
+import { SnackbarProvider, useSnackbar } from "notistack";
+import React, { FunctionComponent, ReactNode, ReactNodeArray } from "react";
+
+interface LoggerProviderProps {
+  children: ReactNode | ReactNodeArray;
+}
+
+const LoggerProvider: FunctionComponent<LoggerProviderProps> = ({
+  children,
+}: LoggerProviderProps) => {
+  return <SnackbarProvider maxSnack={3}>{children}</SnackbarProvider>;
+};
 
 interface Logger {
   success: (message: string) => void;
@@ -40,4 +51,4 @@ function useLogger(): Logger {
   };
 }
 
-export default useLogger;
+export { Logger, LoggerProvider, LoggerProviderProps, useLogger };
