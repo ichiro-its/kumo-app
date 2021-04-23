@@ -1,6 +1,10 @@
+.*
+
+!.eslint*
+!.git*
+!.npm*
+
 node_modules
 
-dist
 build
-
-.idea
+dist

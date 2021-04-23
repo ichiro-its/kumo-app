@@ -1,40 +1,40 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
-  ],
   "env": {
     "browser": true,
     "es2021": true,
     "node": true
   },
+  "extends": [
+    "airbnb-typescript",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module",
     "ecmaFeatures": {
-      "legacyDecorators": true,
-      "jsx": true
-    }
+      "jsx": true,
+      "legacyDecorators": true
+    },
+    "ecmaVersion": 12,
+    "project": "./tsconfig.json",
+    "sourceType": "module"
   },
   "settings": {
     "react": {
       "version": "16"
     }
   },
+  "root": true,
   "rules": {
     "space-before-function-paren": 0,
     "react/prop-types": 0,
     "react/jsx-handler-names": 0,
     "react/jsx-fragments": 0,
     "react/no-unused-prop-types": 0,
+    "react/require-default-props": 0,
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off"
-  },
-  "plugins": [
-    "@typescript-eslint",
-    "prettier"
-  ]
+  }
 }
