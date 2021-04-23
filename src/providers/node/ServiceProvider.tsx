@@ -22,7 +22,7 @@ function useService(): ServiceHandler {
   const service = useContext(ServiceContext);
 
   if (service === null) {
-    throw Error("Illegal service provider access!");
+    throw Error("illegal service provider access");
   }
 
   return service;

@@ -17,7 +17,7 @@ function useBridge(): Bridge {
   const bridge = useContext(BridgeContext);
 
   if (bridge === null) {
-    throw Error("Illegal bridge provider access!");
+    throw Error("illegal bridge provider access");
   }
 
   return bridge;
@@ -41,7 +41,6 @@ const BridgeProvider: FunctionComponent<BridgeProviderProps> = ({
 
   useEffect(() => {
     bridge.connect(bridgeUrl);
-    console.log(bridge);
   }, [bridgeUrl]);
 
   return (

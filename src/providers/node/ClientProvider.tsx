@@ -18,7 +18,7 @@ function useClient(): ClientHandler {
   const client = useContext(ClientContext);
 
   if (client === null) {
-    throw Error("Illegal client provider access!");
+    throw Error("illegal client provider access");
   }
 
   return client;

@@ -18,7 +18,7 @@ function useNode(): NodeHandler {
   const node = useContext(NodeContext);
 
   if (node === null) {
-    throw Error("Illegal node provider access!");
+    throw Error("illegal node provider access");
   }
 
   return node;

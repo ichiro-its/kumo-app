@@ -18,7 +18,7 @@ function useSession(): SessionHandler {
   const session = useContext(SessionContext);
 
   if (session === null) {
-    throw Error("Illegal session provider access!");
+    throw Error("illegal session provider access");
   }
 
   return session;

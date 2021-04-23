@@ -18,7 +18,7 @@ function usePublisher(): PublisherHandler {
   const publisher = useContext(PublisherContext);
 
   if (publisher === null) {
-    throw Error("Illegal publisher access!");
+    throw Error("illegal publisher access");
   }
 
   return publisher;

@@ -22,7 +22,7 @@ function useSubscription(): SubscriptionHandler {
   const subscription = useContext(SubscriptionContext);
 
   if (subscription === null) {
-    throw Error("Illegal subscription access");
+    throw Error("illegal subscription access");
   }
 
   return subscription;
