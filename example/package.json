@@ -1,12 +1,14 @@
 {
   "name": "kumo-app-example",
-  "version": "0.1.1",
+  "version": "0.3.0",
   "homepage": "/kumo-app",
   "scripts": {
     "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
     "build": "run-s build-app build-sw",
     "build-app": "node ../node_modules/react-scripts/bin/react-scripts.js build",
-    "build-sw": "workbox generateSW"
+    "build-sw": "workbox generateSW",
+    "test": "run-s test-lint",
+    "test-lint": "eslint --ext .js,.jsx ."
   },
   "dependencies": {
     "@material-ui/core": "file:../node_modules/@material-ui/core",
@@ -17,6 +19,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "eslint": "^7.24.0",
     "npm-run-all": "^4.1.5",
     "workbox-cli": "^6.1.5"
   },

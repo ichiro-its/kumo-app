@@ -7,11 +7,19 @@ import {
   TextField,
 } from "@material-ui/core";
 
-import { Bridge } from "kumo-client";
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import { Bridge, SessionHandler } from "kumo-client";
+
+import React, {
+  ChangeEvent,
+  FunctionComponent,
+  ReactNode,
+  ReactNodeArray,
+  useEffect,
+  useState,
+} from "react";
 
 import TitledCard from "./TitledCard";
+
 import {
   SessionContext,
   useLogger,
@@ -19,10 +27,14 @@ import {
   useStoreState,
 } from "../hooks";
 
-function SessionProvider({ children }) {
+interface Props {
+  children: ReactNode | ReactNodeArray;
+}
+
+const SessionProvider: FunctionComponent<Props> = ({ children }: Props) => {
   const logger = useLogger();
 
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState<SessionHandler | null>(null);
   const [connecting, setConnecting] = useState(false);
 
   const [webSocketUrl, setWebSocketUrl] = useStoreState(
@@ -66,7 +78,7 @@ function SessionProvider({ children }) {
   const handleConnect = () => {
     setConnecting(true);
     setTimeout(() => {
-      bridge.connect(webSocketUrl);
+      bridge?.connect(webSocketUrl);
     }, 500);
   };
 
@@ -74,7 +86,7 @@ function SessionProvider({ children }) {
     return webSocketUrl.startsWith("ws://") && webSocketUrl.length > 5;
   };
 
-  const onWebSocketUrlChange = (event) => {
+  const onWebSocketUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
     setWebSocketUrl(event.target.value);
     setAutoConnect(false);
   };
@@ -126,13 +138,6 @@ function SessionProvider({ children }) {
       {children}
     </SessionContext.Provider>
   );
-}
-
-SessionProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
 };
 
 export default SessionProvider;

@@ -1,25 +1,32 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
   "extends": [
-    "airbnb",
+    "airbnb-typescript",
     "eslint:recommended",
-    "plugin:prettier/recommended",
-    "plugin:react/recommended"
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "legacyDecorators": true
     },
     "ecmaVersion": 12,
+    "project": "./tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": [
-    "prettier",
-    "react"
-  ],
+  "settings": {
+    "react": {
+      "version": "16"
+    }
+  },
+  "root": true,
   "rules": {
   }
 }

@@ -1,7 +1,13 @@
+import { NodeHandler, PublisherHandler } from "kumo-client";
+
 import useLogger from "../useLogger";
 import useStateOnce from "../useStateOnce";
 
-function usePublisher(node, messageType, topicName) {
+function usePublisher(
+  node: NodeHandler,
+  messageType: string,
+  topicName: string
+): PublisherHandler | null {
   const logger = useLogger();
 
   return useStateOnce(() => {
@@ -9,7 +15,7 @@ function usePublisher(node, messageType, topicName) {
       return null;
     }
 
-    return node.createPublisher(messageType, topicName).catch((err) => {
+    return node.createPublisher(messageType, topicName).catch((err: Error) => {
       logger.error(`Failed to create a new Publisher! ${err.message}.`);
     });
   });
