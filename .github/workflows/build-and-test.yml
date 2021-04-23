@@ -31,3 +31,9 @@ jobs:
         working-directory: ./example
         run: |
           npm test
+      - name: Uploading logs
+        uses: actions/upload-artifact@v2.2.3
+        if: always()
+        with:
+          name: logs
+          path: /home/runner/.npm/_logs/
