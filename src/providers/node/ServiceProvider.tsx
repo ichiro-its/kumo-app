@@ -29,7 +29,7 @@ interface ServiceProviderProps {
   callback: AsyncServiceCallback | ServiceCallback;
 }
 
-const Serviceprovider: FunctionComponent<ServiceProviderProps> = ({
+const ServiceProvider: FunctionComponent<ServiceProviderProps> = ({
   children,
   serviceType,
   serviceName,
@@ -47,7 +47,7 @@ const Serviceprovider: FunctionComponent<ServiceProviderProps> = ({
       });
   }, [node]);
 
-  if (node === null) {
+  if (node === null || service === null) {
     return null;
   }
 
@@ -58,4 +58,4 @@ const Serviceprovider: FunctionComponent<ServiceProviderProps> = ({
   );
 };
 
-export { Serviceprovider, ServiceProviderProps, useService };
+export { ServiceHandler, ServiceProvider, ServiceProviderProps, useService };

@@ -49,7 +49,7 @@ const SubscriptionProvider: FunctionComponent<SubscriptionProviderProps> = ({
       });
   }, [node]);
 
-  if (node === null) {
+  if (node === null || subscription === null) {
     return null;
   }
 
@@ -63,6 +63,7 @@ const SubscriptionProvider: FunctionComponent<SubscriptionProviderProps> = ({
 export {
   AsyncSubscriptionCallback,
   SubscriptionCallback,
+  SubscriptionHandler,
   SubscriptionProvider,
   SubscriptionProviderProps,
   useSubscription,

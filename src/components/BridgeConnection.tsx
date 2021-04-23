@@ -36,6 +36,7 @@ const BridgeConnection: FunctionComponent = () => {
       ?.onConnect(() => {
         logger.success(`Connected to the bridge server on ${url}!`);
         setConnected(true);
+        setConnecting(false);
       })
       .onDisconnect((code, reason) => {
         logger.error(
@@ -43,10 +44,12 @@ const BridgeConnection: FunctionComponent = () => {
             `${reason || "no reason"} (${code || "unknown"}).`
         );
         setConnected(false);
+        setConnecting(false);
       })
       .onError((err) => {
         logger.error(`Found error! ${err.message}.`);
         setConnected(false);
+        setConnecting(false);
       });
   }, [bridge]);
 

@@ -37,11 +37,11 @@ const NodeProvider: FunctionComponent<NodeProviderProps> = ({
     });
   }, [session]);
 
-  if (session === null) {
+  if (session === null || node === null) {
     return null;
   }
 
   return <NodeContext.Provider value={node}>{children}</NodeContext.Provider>;
 };
 
-export { NodeProvider, NodeProviderProps, useNode };
+export { NodeHandler, NodeProvider, NodeProviderProps, useNode };

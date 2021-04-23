@@ -19,16 +19,14 @@ function useBridge(): Bridge | null {
 
 interface BridgeProviderProps {
   children: ReactNode | ReactNodeArray;
-  url?: string;
+  url: string | undefined;
 }
 
 const BridgeProvider: FunctionComponent<BridgeProviderProps> = ({
   children,
   url,
 }: BridgeProviderProps) => {
-  const [bridge] = useState(() => {
-    return new Bridge();
-  });
+  const [bridge] = useState(() => new Bridge());
 
   const [bridgeUrl] = useStoreState(
     "bridgeProviderUrl",
@@ -42,10 +40,6 @@ const BridgeProvider: FunctionComponent<BridgeProviderProps> = ({
   return (
     <BridgeContext.Provider value={bridge}>{children}</BridgeContext.Provider>
   );
-};
-
-BridgeProvider.defaultProps = {
-  url: "",
 };
 
 export { Bridge, BridgeProvider, BridgeProviderProps, useBridge };

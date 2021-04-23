@@ -30,12 +30,16 @@ const SessionProvider: FunctionComponent<SessionProviderProps> = ({
   const [session, setSession] = useState<SessionHandler | null>(null);
 
   useEffect(() => {
-    bridge?.onConnect((newSession: SessionHandler) => {
-      setSession(newSession);
-    });
+    bridge
+      ?.onConnect((newSession: SessionHandler) => {
+        setSession(newSession);
+      })
+      .onDisconnect(() => {
+        setSession(null);
+      });
   }, [bridge]);
 
-  if (bridge === null) {
+  if (bridge === null || session === null) {
     return null;
   }
 
@@ -46,4 +50,4 @@ const SessionProvider: FunctionComponent<SessionProviderProps> = ({
   );
 };
 
-export { SessionProvider, SessionProviderProps, useSession };
+export { SessionHandler, SessionProvider, SessionProviderProps, useSession };

@@ -41,7 +41,7 @@ const PublisherProvider: FunctionComponent<PublisherProviderProps> = ({
       });
   }, [node]);
 
-  if (node === null) {
+  if (node === null || publisher === null) {
     return null;
   }
 
@@ -52,4 +52,9 @@ const PublisherProvider: FunctionComponent<PublisherProviderProps> = ({
   );
 };
 
-export { PublisherProvider, PublisherProviderProps, usePublisher };
+export {
+  PublisherHandler,
+  PublisherProvider,
+  PublisherProviderProps,
+  usePublisher,
+};

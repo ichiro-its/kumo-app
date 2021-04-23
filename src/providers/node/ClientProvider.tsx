@@ -50,4 +50,4 @@ const ClientProvider: FunctionComponent<ClientProviderProps> = ({
   );
 };
 
-export { ClientProvider, ClientProviderProps, useClient };
+export { ClientHandler, ClientProvider, ClientProviderProps, useClient };

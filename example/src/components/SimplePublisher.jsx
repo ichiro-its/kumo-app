@@ -2,19 +2,19 @@ import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import {
   BoxedCircularProgress,
+  NodeProvider,
+  PublisherProvider,
   TitledCard,
   useHandleProcess,
   useLogger,
-  useNode,
   usePublisher,
 } from "kumo-app";
 
 import React, { useState } from "react";
 
-function SimplePublisherNode() {
+function PublishForm() {
+  const publisher = usePublisher();
   const logger = useLogger();
-  const node = useNode("simple_publisher");
-  const publisher = usePublisher(node, "std_msgs/msg/String", "/topic");
 
   const [data, setData] = useState("Hello World! 0");
 
@@ -45,43 +45,47 @@ function SimplePublisherNode() {
     setData(ev.target.value);
   };
 
-  const Content = () => {
-    if (publisher === null) {
-      return <BoxedCircularProgress />;
-    }
-
-    return (
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            label="Data"
-            value={data}
-            onChange={handleDataChange}
-            disabled={publisher === null || publishing}
-            variant="outlined"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            onClick={handlePublish}
-            disabled={publisher === null || publishing}
-            color="primary"
-            variant="contained"
-            fullWidth
-          >
-            {publishing ? <CircularProgress size={24} /> : "Publish"}
-          </Button>
-        </Grid>
-      </Grid>
-    );
-  };
+  if (publisher === null) {
+    return <BoxedCircularProgress />;
+  }
 
   return (
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <TextField
+          label="Data"
+          value={data}
+          onChange={handleDataChange}
+          disabled={publisher === null || publishing}
+          variant="outlined"
+          fullWidth
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Button
+          onClick={handlePublish}
+          disabled={publisher === null || publishing}
+          color="primary"
+          variant="contained"
+          fullWidth
+        >
+          {publishing ? <CircularProgress size={24} /> : "Publish"}
+        </Button>
+      </Grid>
+    </Grid>
+  );
+}
+
+function SimplePublisher() {
+  return (
     <TitledCard title="Simple Publisher Node" raised>
-      <Content />
+      <NodeProvider nodeName="simple_publisher">
+        <PublisherProvider messageType="std_msgs/msg/String" topicName="/topic">
+          <PublishForm />
+        </PublisherProvider>
+      </NodeProvider>
     </TitledCard>
   );
 }
 
-export default SimplePublisherNode;
+export default SimplePublisher;
