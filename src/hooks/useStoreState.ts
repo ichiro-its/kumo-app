@@ -1,19 +1,21 @@
 import { useState } from "react";
 import Store from "store2";
 
-const useStoreState: (key: any, initialValue: any) => any = (
-  key,
-  initialValue
-) => {
+type StoreStateDispatch<T> = (newState: T) => void;
+
+function useStoreState<T>(
+  key: string,
+  initialValue: T
+): [T, StoreStateDispatch<T>] {
   const [state, setState] = useState(Store.get(key, initialValue));
 
   return [
     state,
-    (newState: any) => {
+    (newState: T) => {
       setState(newState);
       Store.set(key, newState);
     },
   ];
-};
+}
 
 export default useStoreState;

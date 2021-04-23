@@ -1,12 +1,19 @@
+import {
+  AsyncServiceCallback,
+  NodeHandler,
+  ServiceCallback,
+  ServiceHandler,
+} from "kumo-client";
+
 import useLogger from "../useLogger";
 import useStateOnce from "../useStateOnce";
 
-const useService: (
-  node: any,
+function useService(
+  node: NodeHandler,
   serviceType: string,
   serviceName: string,
-  callback: () => void
-) => any = (node, serviceType, serviceName, callback) => {
+  callback: ServiceCallback | AsyncServiceCallback
+): ServiceHandler | null {
   const logger = useLogger();
 
   return useStateOnce(() => {
@@ -20,6 +27,6 @@ const useService: (
         logger.error(`Failed to create a new Service! ${err.message}.`);
       });
   });
-};
+}
 
 export default useService;

@@ -8,9 +8,18 @@ import {
 } from "@material-ui/core";
 
 import { Bridge, SessionHandler } from "kumo-client";
-import React, { ReactNode, ReactNodeArray, useEffect, useState } from "react";
+
+import React, {
+  ChangeEvent,
+  FunctionComponent,
+  ReactNode,
+  ReactNodeArray,
+  useEffect,
+  useState,
+} from "react";
 
 import TitledCard from "./TitledCard";
+
 import {
   SessionContext,
   useLogger,
@@ -22,8 +31,7 @@ interface Props {
   children: ReactNode | ReactNodeArray;
 }
 
-const SessionProvider = (props: Props) => {
-  const { children } = props;
+const SessionProvider: FunctionComponent<Props> = ({ children }: Props) => {
   const logger = useLogger();
 
   const [session, setSession] = useState<SessionHandler | null>(null);
@@ -70,7 +78,7 @@ const SessionProvider = (props: Props) => {
   const handleConnect = () => {
     setConnecting(true);
     setTimeout(() => {
-      bridge.connect(webSocketUrl);
+      bridge?.connect(webSocketUrl);
     }, 500);
   };
 
@@ -78,7 +86,7 @@ const SessionProvider = (props: Props) => {
     return webSocketUrl.startsWith("ws://") && webSocketUrl.length > 5;
   };
 
-  const onWebSocketUrlChange = (event: any) => {
+  const onWebSocketUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
     setWebSocketUrl(event.target.value);
     setAutoConnect(false);
   };

@@ -1,8 +1,10 @@
+import { NodeHandler } from "kumo-client";
+
 import useLogger from "../useLogger";
 import { useSession } from "../useSession";
 import useStateOnce from "../useStateOnce";
 
-const useNode: (nodeName: string) => any = (nodeName) => {
+function useNode(nodeName: string): NodeHandler | null {
   const logger = useLogger();
   const session = useSession();
 
@@ -15,6 +17,6 @@ const useNode: (nodeName: string) => any = (nodeName) => {
       logger.error(`Failed to create a Node! ${err.message}.`);
     });
   });
-};
+}
 
 export default useNode;

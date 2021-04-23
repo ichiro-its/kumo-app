@@ -6,14 +6,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 
-import React, { ReactNode, ReactNodeArray } from "react";
-
-interface Props {
-  children: ReactNode | ReactNodeArray;
-  title?: "" | string;
-  raised?: false | boolean;
-  disablePadding?: false | boolean;
-}
+import React, { FunctionComponent, ReactNode, ReactNodeArray } from "react";
 
 const useStyles = makeStyles(() => {
   const theme = useTheme();
@@ -28,8 +21,16 @@ const useStyles = makeStyles(() => {
   };
 });
 
-function TitledCard(props: Props) {
+interface Props {
+  children: ReactNode | ReactNodeArray;
+  title: string;
+  raised?: boolean;
+  disablePadding?: boolean;
+}
+
+const TitledCard: FunctionComponent<Props> = (props: Props) => {
   const { children, title, raised, disablePadding } = props;
+
   const classes = useStyles();
 
   return (
@@ -41,11 +42,16 @@ function TitledCard(props: Props) {
           title: classes.headerTitle,
         }}
       />
-      <CardContent style={{ padding: disablePadding ? 0 : 0 }}>
+      <CardContent style={{ padding: disablePadding ? 0 : undefined }}>
         {children}
       </CardContent>
     </Card>
   );
-}
+};
+
+TitledCard.defaultProps = {
+  raised: false,
+  disablePadding: false,
+};
 
 export default TitledCard;

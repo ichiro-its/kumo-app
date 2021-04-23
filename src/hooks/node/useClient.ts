@@ -1,14 +1,16 @@
+import { ClientHandler, NodeHandler } from "kumo-client";
+
 import useLogger from "../useLogger";
 import useStateOnce from "../useStateOnce";
 
-const useClient: (
-  node: any | undefined,
+function useClient(
+  node: NodeHandler | null,
   serviceType: string,
   serviceName: string
-) => any = (node, serviceType, serviceName) => {
+): ClientHandler | null {
   const logger = useLogger();
 
-  return useStateOnce(() => {
+  return useStateOnce<ClientHandler>(() => {
     if (node === null) {
       return null;
     }
@@ -17,6 +19,6 @@ const useClient: (
       logger.error(`Failed to create a new Client! ${err.message}.`);
     });
   });
-};
+}
 
 export default useClient;

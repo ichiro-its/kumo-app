@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 
-const useStateOnce: (callback: any | undefined) => any = (callback) => {
-  const [state, setState] = useState<any>(null);
+type StateOnceCallback<T> = () => T | Promise<T | void> | null;
+
+function useStateOnce<T>(callback: StateOnceCallback<T>): T | null {
+  const [state, setState] = useState<T | null>(null);
   const [once, setOnce] = useState<boolean>(false);
 
   useEffect(() => {
@@ -12,7 +14,11 @@ const useStateOnce: (callback: any | undefined) => any = (callback) => {
         setOnce(true);
         if (result instanceof Promise) {
           result.then((newResult) => {
-            setState(newResult);
+            if (newResult) {
+              setState(newResult);
+            } else {
+              setOnce(false);
+            }
           });
         } else {
           setState(result);
@@ -22,6 +28,6 @@ const useStateOnce: (callback: any | undefined) => any = (callback) => {
   });
 
   return state;
-};
+}
 
 export default useStateOnce;

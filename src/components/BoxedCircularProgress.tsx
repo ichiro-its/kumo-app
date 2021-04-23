@@ -1,7 +1,7 @@
 import { Box, CircularProgress } from "@material-ui/core";
-import React from "react";
+import React, { FunctionComponent } from "react";
 
-const BoxedCircularProgress = () => {
+const BoxedCircularProgress: FunctionComponent = () => {
   return (
     <Box
       display="flex"

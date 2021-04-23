@@ -1,10 +1,10 @@
 import { createContext, useContext } from "react";
 import { SessionHandler } from "kumo-client";
 
-const SessionContext = createContext(new SessionHandler(null));
+const SessionContext = createContext<SessionHandler | null>(null);
 
-const useSession = () => {
+function useSession(): SessionHandler | null {
   return useContext(SessionContext);
-};
+}
 
 export { SessionContext, useSession };

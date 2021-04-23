@@ -1,12 +1,11 @@
 import { SnackbarProvider } from "notistack";
-import React, { ReactNode, ReactNodeArray } from "react";
+import React, { FunctionComponent, ReactNode, ReactNodeArray } from "react";
 
 interface Props {
   children: ReactNode | ReactNodeArray;
 }
 
-const LoggerProvider = (props: Props) => {
-  const { children } = props;
+const LoggerProvider: FunctionComponent<Props> = ({ children }: Props) => {
   return <SnackbarProvider maxSnack={3}>{children}</SnackbarProvider>;
 };
 

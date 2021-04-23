@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-const useHandleProcess: (
-  process: any | undefined,
+function useHandleProcess(
+  process: () => void | Promise<void>,
   delay: number
-) => [boolean, () => void] = (process, delay) => {
+): [boolean, () => void] {
   const [processing, setProcessing] = useState<boolean>(false);
 
   const handleProcess = () => {
@@ -25,6 +25,6 @@ const useHandleProcess: (
   };
 
   return [processing, handleProcess];
-};
+}
 
 export default useHandleProcess;

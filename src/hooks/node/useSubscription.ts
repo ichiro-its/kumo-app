@@ -1,12 +1,19 @@
+import {
+  AsyncSubscriptionCallback,
+  NodeHandler,
+  SubscriptionCallback,
+  SubscriptionHandler,
+} from "kumo-client";
+
 import useLogger from "../useLogger";
 import useStateOnce from "../useStateOnce";
 
-const useSubscription: (
-  node: any,
+function useSubscription(
+  node: NodeHandler,
   messageType: string,
   topicName: string,
-  callback: () => void
-) => any = (node, messageType, topicName, callback) => {
+  callback: SubscriptionCallback | AsyncSubscriptionCallback
+): SubscriptionHandler | null {
   const logger = useLogger();
 
   return useStateOnce(() => {
@@ -20,6 +27,6 @@ const useSubscription: (
         logger.error(`Failed to create a new Subscription! ${err.message}.`);
       });
   });
-};
+}
 
 export default useSubscription;
