@@ -14,8 +14,14 @@ import { useNode } from "./NodeProvider";
 
 const ClientContext = createContext<ClientHandler | null>(null);
 
-function useClient(): ClientHandler | null {
-  return useContext(ClientContext);
+function useClient(): ClientHandler {
+  const client = useContext(ClientContext);
+
+  if (client === null) {
+    throw Error("Illegal client provider access!");
+  }
+
+  return client;
 }
 
 interface ClientProviderProps {
@@ -35,13 +41,13 @@ const ClientProvider: FunctionComponent<ClientProviderProps> = ({
 
   useEffect(() => {
     node
-      ?.createClient(serviceType, serviceName)
+      .createClient(serviceType, serviceName)
       .then((newClient: ClientHandler) => {
         setClient(newClient);
       });
   }, [node]);
 
-  if (node === null) {
+  if (client === null) {
     return null;
   }
 

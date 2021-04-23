@@ -13,8 +13,14 @@ import { useStoreState } from "../hooks";
 
 const BridgeContext = createContext<Bridge | null>(null);
 
-function useBridge(): Bridge | null {
-  return useContext(BridgeContext);
+function useBridge(): Bridge {
+  const bridge = useContext(BridgeContext);
+
+  if (bridge === null) {
+    throw Error("Illegal bridge provider access!");
+  }
+
+  return bridge;
 }
 
 interface BridgeProviderProps {
@@ -35,6 +41,7 @@ const BridgeProvider: FunctionComponent<BridgeProviderProps> = ({
 
   useEffect(() => {
     bridge.connect(bridgeUrl);
+    console.log(bridge);
   }, [bridgeUrl]);
 
   return (

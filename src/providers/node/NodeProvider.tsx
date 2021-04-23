@@ -14,8 +14,14 @@ import { useSession } from "../SessionProvider";
 
 const NodeContext = createContext<NodeHandler | null>(null);
 
-function useNode(): NodeHandler | null {
-  return useContext(NodeContext);
+function useNode(): NodeHandler {
+  const node = useContext(NodeContext);
+
+  if (node === null) {
+    throw Error("Illegal node provider access!");
+  }
+
+  return node;
 }
 
 interface NodeProviderProps {
@@ -32,12 +38,12 @@ const NodeProvider: FunctionComponent<NodeProviderProps> = ({
   const [node, setNode] = useState<NodeHandler | null>(null);
 
   useEffect(() => {
-    session?.createNode(nodeName).then((newNode: NodeHandler) => {
+    session.createNode(nodeName).then((newNode: NodeHandler) => {
       setNode(newNode);
     });
   }, [session]);
 
-  if (session === null || node === null) {
+  if (node === null) {
     return null;
   }
 

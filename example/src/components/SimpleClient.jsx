@@ -1,7 +1,6 @@
 import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import {
-  BoxedCircularProgress,
   ClientProvider,
   NodeProvider,
   TitledCard,
@@ -46,10 +45,6 @@ function RequestForm() {
     const newB = parseInt(ev.target.value, 10);
     setB(Number.isNaN(newB) ? b : newB);
   };
-
-  if (client === null) {
-    return <BoxedCircularProgress />;
-  }
 
   return (
     <Grid container spacing={2}>

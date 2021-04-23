@@ -18,8 +18,14 @@ import { useNode } from "./NodeProvider";
 
 const ServiceContext = createContext<ServiceHandler | null>(null);
 
-function useService(): ServiceHandler | null {
-  return useContext(ServiceContext);
+function useService(): ServiceHandler {
+  const service = useContext(ServiceContext);
+
+  if (service === null) {
+    throw Error("Illegal service provider access!");
+  }
+
+  return service;
 }
 
 interface ServiceProviderProps {
@@ -41,13 +47,13 @@ const ServiceProvider: FunctionComponent<ServiceProviderProps> = ({
 
   useEffect(() => {
     node
-      ?.createService(serviceType, serviceName, callback)
+      .createService(serviceType, serviceName, callback)
       .then((newService: ServiceHandler) => {
         setService(newService);
       });
   }, [node]);
 
-  if (node === null || service === null) {
+  if (service === null) {
     return null;
   }
 

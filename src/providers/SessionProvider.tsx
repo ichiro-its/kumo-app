@@ -14,8 +14,14 @@ import { useBridge } from "./BridgeProvider";
 
 const SessionContext = createContext<SessionHandler | null>(null);
 
-function useSession(): SessionHandler | null {
-  return useContext(SessionContext);
+function useSession(): SessionHandler {
+  const session = useContext(SessionContext);
+
+  if (session === null) {
+    throw Error("Illegal session provider access!");
+  }
+
+  return session;
 }
 
 interface SessionProviderProps {
@@ -31,7 +37,7 @@ const SessionProvider: FunctionComponent<SessionProviderProps> = ({
 
   useEffect(() => {
     bridge
-      ?.onConnect((newSession: SessionHandler) => {
+      .onConnect((newSession: SessionHandler) => {
         setSession(newSession);
       })
       .onDisconnect(() => {
@@ -39,7 +45,7 @@ const SessionProvider: FunctionComponent<SessionProviderProps> = ({
       });
   }, [bridge]);
 
-  if (bridge === null || session === null) {
+  if (session === null) {
     return null;
   }
 
