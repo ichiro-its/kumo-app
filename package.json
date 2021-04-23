@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "React component wrapper for Kumo client library",
   "keywords": [
-    "javascript",
+    "typescript",
     "kumo",
     "kumo-client",
     "material-ui",
