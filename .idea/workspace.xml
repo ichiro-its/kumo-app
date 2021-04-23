@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3bf0bcf-bdab-4fce-880a-5bce159a7044" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/useClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useClient.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/useNode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useNode.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/usePublisher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/usePublisher.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/useService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/node/useSubscription.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/node/useSubscription.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +31,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -49,6 +44,7 @@
       <updated>1619060410925</updated>
       <workItem from="1619060415076" duration="8916000" />
       <workItem from="1619082727346" duration="17657000" />
+      <workItem from="1619140361515" duration="1000000" />
     </task>
     <servers />
   </component>
