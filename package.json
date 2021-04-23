@@ -21,9 +21,9 @@
   },
   "repository": "git@github.com:ichiro-its/kumo-app.git",
   "scripts": {
+    "prepare": "run-s build",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "build": "microbundle-crl --no-compress --format modern,cjs",
-    "prepare": "run-s build",
     "test": "run-s test-lint",
     "test-lint": "eslint --ext .js,.ts,.jsx,.tsx ."
   },
