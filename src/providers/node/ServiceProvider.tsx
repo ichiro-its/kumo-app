@@ -8,25 +8,27 @@ import React, {
   useState,
 } from "react";
 
-import {
-  AsyncServiceCallback,
-  ServiceCallback,
-  ServiceHandler,
-} from "kumo-client";
+import { ServiceCallback, ServiceHandler } from "kumo-client";
 
 import { useNode } from "./NodeProvider";
 
 const ServiceContext = createContext<ServiceHandler | null>(null);
 
-function useService(): ServiceHandler | null {
-  return useContext(ServiceContext);
+function useService(): ServiceHandler {
+  const service = useContext(ServiceContext);
+
+  if (service === null) {
+    throw Error("illegal service provider access");
+  }
+
+  return service;
 }
 
 interface ServiceProviderProps {
   children: ReactNode | ReactNodeArray;
   serviceType: string;
   serviceName: string;
-  callback: AsyncServiceCallback | ServiceCallback;
+  callback: ServiceCallback;
 }
 
 const ServiceProvider: FunctionComponent<ServiceProviderProps> = ({
@@ -41,13 +43,13 @@ const ServiceProvider: FunctionComponent<ServiceProviderProps> = ({
 
   useEffect(() => {
     node
-      ?.createService(serviceType, serviceName, callback)
+      .createService(serviceType, serviceName, callback)
       .then((newService: ServiceHandler) => {
         setService(newService);
       });
   }, [node]);
 
-  if (node === null || service === null) {
+  if (service === null) {
     return null;
   }
 
@@ -58,4 +60,10 @@ const ServiceProvider: FunctionComponent<ServiceProviderProps> = ({
   );
 };
 
-export { ServiceHandler, ServiceProvider, ServiceProviderProps, useService };
+export {
+  ServiceCallback,
+  ServiceHandler,
+  ServiceProvider,
+  ServiceProviderProps,
+  useService,
+};

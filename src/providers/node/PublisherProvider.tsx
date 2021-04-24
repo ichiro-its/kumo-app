@@ -14,8 +14,14 @@ import { useNode } from "./NodeProvider";
 
 const PublisherContext = createContext<PublisherHandler | null>(null);
 
-function usePublisher(): PublisherHandler | null {
-  return useContext(PublisherContext);
+function usePublisher(): PublisherHandler {
+  const publisher = useContext(PublisherContext);
+
+  if (publisher === null) {
+    throw Error("illegal publisher access");
+  }
+
+  return publisher;
 }
 
 interface PublisherProviderProps {
@@ -35,13 +41,13 @@ const PublisherProvider: FunctionComponent<PublisherProviderProps> = ({
 
   useEffect(() => {
     node
-      ?.createPublisher(messageType, topicName)
+      .createPublisher(messageType, topicName)
       .then((newPublisher: PublisherHandler) => {
         setPublisher(newPublisher);
       });
   }, [node]);
 
-  if (node === null || publisher === null) {
+  if (publisher === null) {
     return null;
   }
 

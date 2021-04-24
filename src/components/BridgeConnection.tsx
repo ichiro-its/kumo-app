@@ -16,7 +16,7 @@ import React, {
 
 import { TitledCard } from "./TitledCard";
 
-import { useStoreState } from "../hooks";
+import { useHandleProcess, useStoreState } from "../hooks";
 import { useBridge, useLogger } from "../providers";
 
 const BridgeConnection: FunctionComponent = () => {
@@ -24,19 +24,21 @@ const BridgeConnection: FunctionComponent = () => {
   const logger = useLogger();
 
   const [connected, setConnected] = useState(false);
-  const [connecting, setConnecting] = useState(false);
 
   const [url, setUrl] = useStoreState(
     "bridgeProviderUrl",
     "ws://localhost:8080"
   );
 
+  const [connecting, handleConnect] = useHandleProcess(() => {
+    return bridge.connect(url);
+  }, 500);
+
   useEffect(() => {
     bridge
       ?.onConnect(() => {
         logger.success(`Connected to the bridge server on ${url}!`);
         setConnected(true);
-        setConnecting(false);
       })
       .onDisconnect((code, reason) => {
         logger.error(
@@ -44,21 +46,12 @@ const BridgeConnection: FunctionComponent = () => {
             `${reason || "no reason"} (${code || "unknown"}).`
         );
         setConnected(false);
-        setConnecting(false);
       })
       .onError((err) => {
         logger.error(`Found error! ${err.message}.`);
         setConnected(false);
-        setConnecting(false);
       });
   }, [bridge]);
-
-  const handleConnect = () => {
-    setConnecting(true);
-    setTimeout(() => {
-      bridge?.connect(url);
-    }, 500);
-  };
 
   const validateUrl = () => {
     return url.startsWith("ws://") && url.length > 5;

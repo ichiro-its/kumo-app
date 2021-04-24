@@ -1,7 +1,6 @@
 import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 
 import {
-  BoxedCircularProgress,
   NodeProvider,
   PublisherProvider,
   TitledCard,
@@ -44,10 +43,6 @@ function PublishForm() {
   const handleDataChange = (ev) => {
     setData(ev.target.value);
   };
-
-  if (publisher === null) {
-    return <BoxedCircularProgress />;
-  }
 
   return (
     <Grid container spacing={2}>

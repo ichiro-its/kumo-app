@@ -8,25 +8,27 @@ import React, {
   useState,
 } from "react";
 
-import {
-  AsyncSubscriptionCallback,
-  SubscriptionCallback,
-  SubscriptionHandler,
-} from "kumo-client";
+import { SubscriptionCallback, SubscriptionHandler } from "kumo-client";
 
 import { useNode } from "./NodeProvider";
 
 const SubscriptionContext = createContext<SubscriptionHandler | null>(null);
 
-function useSubscription(): SubscriptionHandler | null {
-  return useContext(SubscriptionContext);
+function useSubscription(): SubscriptionHandler {
+  const subscription = useContext(SubscriptionContext);
+
+  if (subscription === null) {
+    throw Error("illegal subscription access");
+  }
+
+  return subscription;
 }
 
 interface SubscriptionProviderProps {
   children: ReactNode | ReactNodeArray;
   messageType: string;
   topicName: string;
-  callback: AsyncSubscriptionCallback | SubscriptionCallback;
+  callback: SubscriptionCallback;
 }
 
 const SubscriptionProvider: FunctionComponent<SubscriptionProviderProps> = ({
@@ -43,13 +45,13 @@ const SubscriptionProvider: FunctionComponent<SubscriptionProviderProps> = ({
 
   useEffect(() => {
     node
-      ?.createSubscription(messageType, topicName, callback)
+      .createSubscription(messageType, topicName, callback)
       .then((newSubscription: SubscriptionHandler) => {
         setSubscription(newSubscription);
       });
   }, [node]);
 
-  if (node === null || subscription === null) {
+  if (subscription === null) {
     return null;
   }
 
@@ -61,7 +63,6 @@ const SubscriptionProvider: FunctionComponent<SubscriptionProviderProps> = ({
 };
 
 export {
-  AsyncSubscriptionCallback,
   SubscriptionCallback,
   SubscriptionHandler,
   SubscriptionProvider,
