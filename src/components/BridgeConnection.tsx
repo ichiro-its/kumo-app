@@ -30,8 +30,8 @@ const BridgeConnection: FunctionComponent = () => {
     "ws://localhost:8080"
   );
 
-  const [connecting, handleConnect] = useHandleProcess(() => {
-    return bridge.connect(url);
+  const [connecting, handleConnect] = useHandleProcess(async () => {
+    await bridge.connect(url);
   }, 500);
 
   useEffect(() => {
