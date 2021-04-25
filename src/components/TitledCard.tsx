@@ -21,16 +21,19 @@ const useStyles = makeStyles(() => {
   };
 });
 
-interface Props {
+interface TitledCardProps {
   children: ReactNode | ReactNodeArray;
   title: string;
   raised?: boolean;
   disablePadding?: boolean;
 }
 
-const TitledCard: FunctionComponent<Props> = (props: Props) => {
-  const { children, title, raised, disablePadding } = props;
-
+const TitledCard: FunctionComponent<TitledCardProps> = ({
+  children,
+  title,
+  raised,
+  disablePadding,
+}: TitledCardProps) => {
   const classes = useStyles();
 
   return (
@@ -54,4 +57,4 @@ TitledCard.defaultProps = {
   disablePadding: false,
 };
 
-export default TitledCard;
+export { TitledCard, TitledCardProps };

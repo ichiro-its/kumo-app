@@ -1,45 +1,55 @@
 import { Box, Container, Grid } from "@material-ui/core";
-import { LoggerProvider, SessionProvider } from "kumo-app";
+
+import {
+  BridgeProvider,
+  BridgeConnection,
+  LoggerProvider,
+  SessionProvider,
+} from "kumo-app";
+
 import React from "react";
 
 import {
-  SimpleClientNode,
-  SimplePublisherNode,
-  SimpleServiceNode,
-  SimpleSubscriptionNode,
+  SimpleClient,
+  SimplePublisher,
+  SimpleService,
+  SimpleSubscription,
 } from "./components";
 
 function App() {
   return (
     <LoggerProvider>
-      <SessionProvider>
-        <Box margin={4}>
-          <Container maxWidth="md">
-            <Grid container spacing={4}>
-              <Grid item md={6} sm={12}>
-                <Grid container spacing={4}>
-                  <Grid item xs={12}>
-                    <SimplePublisherNode />
+      <BridgeProvider>
+        <BridgeConnection />
+        <SessionProvider>
+          <Box margin={4}>
+            <Container maxWidth="md">
+              <Grid container spacing={4}>
+                <Grid item md={6} sm={12}>
+                  <Grid container spacing={4}>
+                    <Grid item xs={12}>
+                      <SimplePublisher />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <SimpleSubscription />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    <SimpleSubscriptionNode />
+                </Grid>
+                <Grid item md={6} sm={12}>
+                  <Grid container spacing={4}>
+                    <Grid item xs={12}>
+                      <SimpleClient />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <SimpleService />
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item md={6} sm={12}>
-                <Grid container spacing={4}>
-                  <Grid item xs={12}>
-                    <SimpleClientNode />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <SimpleServiceNode />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Container>
-        </Box>
-      </SessionProvider>
+            </Container>
+          </Box>
+        </SessionProvider>
+      </BridgeProvider>
     </LoggerProvider>
   );
 }
