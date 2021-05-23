@@ -39,9 +39,8 @@ const SubscriptionProvider: FunctionComponent<SubscriptionProviderProps> = ({
 }: SubscriptionProviderProps) => {
   const node = useNode();
 
-  const [subscription, setSubscription] = useState<SubscriptionHandler | null>(
-    null
-  );
+  const [subscription, setSubscription] =
+    useState<SubscriptionHandler | null>(null);
 
   useEffect(() => {
     node
